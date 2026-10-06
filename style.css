@@ -169,14 +169,32 @@ dialog h4{margin:0 0 12px;font-size:.8rem;font-weight:500;letter-spacing:.18em;t
 @media (prefers-reduced-motion:reduce){.feat.ink *,.feat.ink::after{transition:none!important}}
 
 /* ---------- Excriblecism: nota de pergamino pixel art (sin repetir) ---------- */
-.feat.pixel{--w0:#100b06;--w3:#4a3322;--ink:#24160a;--ink2:#3e2a17;--ink3:#6b5338;
-  --tex:url(media/ButtonTexture.png);
-  image-rendering:pixelated;isolation:isolate;grid-template-columns:1fr 1.15fr;color:var(--ink);
-  font-family:"IM Fell English",Georgia,"Times New Roman",serif;
-  padding:4px;border-radius:0;box-shadow:none;background:none;
-  /* la nota se estira por las esquinas (9-slice): no se repite y los bordes conservan su pixel art */
-  border:72px solid transparent;border-image:url(media/Sprite-Note.png) 24 fill/72px stretch;
-  filter:drop-shadow(8px 8px 0 rgba(0,0,0,.5))}
+.feat.pixel {
+  --w0: #100b06; --w3: #4a3322; --ink: #24160a; --ink2: #3e2a17; --ink3: #6b5338;
+  --tex: url(media/ButtonTexture.png);
+  image-rendering: pixelated;
+  isolation: isolate;
+  grid-template-columns: 1fr 1.15fr;
+  color: var(--ink);
+  font-family: "IM Fell English", Georgia, "Times New Roman", serif;
+  
+  /* 1. AUMENTAR PADDING (Empuja el texto hacia el centro) */
+  padding: 32px; /* Antes era 4px. Ajusta este número (ej. 40px) si aún roza los bordes */
+  box-sizing: border-box; /* Asegura que el padding no desborde el ancho total */
+  
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+  
+  border: 72px solid transparent;
+  
+  /* 2. CORTE (SLICE) */
+  /* Si sigues viendo "dientes" oscuros repitiéndose en el centro del fondo, 
+     cambia el 24 por un número mayor como 32 o 40 (el tamaño de tus esquinas en el PNG) */
+  border-image: url(media/Sprite-Note.png) 240 fill / 40px round;
+  
+  filter: drop-shadow(8px 8px 0 rgba(0,0,0,.5));
+}
 .feat.pixel>*{position:relative;z-index:1}
 .feat.pixel .feat-text{order:-1;padding:0;background:none;border:0}
 .eyebrow{margin:0 0 10px;font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink3)}
@@ -198,17 +216,7 @@ dialog h4{margin:0 0 12px;font-size:.8rem;font-weight:500;letter-spacing:.18em;t
 .feat.pixel .feat-media img,.feat.pixel .feat-media .ph{aspect-ratio:4/3;border-radius:0;
   clip-path:polygon(0 24%,4% 24%,4% 16%,10% 16%,10% 9%,20% 9%,20% 4%,35% 4%,35% 0,65% 0,65% 4%,80% 4%,80% 9%,90% 9%,90% 16%,96% 16%,96% 24%,100% 24%,100% 100%,0 100%)}
 
-/* Sprites 2D que siempre miran a cámara, de pie sobre la nota */
-.stage{grid-column:1/-1;position:relative;height:clamp(150px,22vw,200px);overflow:hidden;
-  border:0;background:none;box-shadow:none;margin-top:8px}
-.stage-sprites{position:absolute;inset:0}
-.spr{position:absolute;left:calc(var(--x)*1%);bottom:calc(var(--b)*1%);height:calc(var(--h)*1%);width:0;
-  translate:calc(var(--px,0)*var(--k)*1px) 0;transition:translate .3s ease-out}
-.spr img{position:absolute;left:50%;bottom:0;height:100%;width:auto;image-rendering:pixelated;transform:translateX(-50%);animation:sway 2.4s steps(2) infinite}
-.spr:nth-child(even) img{animation-delay:.6s}
-.spr .shadow{position:absolute;left:0;bottom:-3%;width:max(44px,calc(var(--h)*.9px));height:12%;transform:translateX(-50%);
-  background:radial-gradient(ellipse,rgba(36,22,10,.45),transparent 70%)}
-@keyframes sway{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-50%) translateY(-3px)}}
+
 
 /* La oración se "escribe" directamente sobre el papel */
 .plaque{grid-column:1/-1;display:flex;flex-direction:column;gap:6px;padding:10px 0 0;margin-top:6px;
@@ -219,8 +227,14 @@ dialog h4{margin:0 0 12px;font-size:.8rem;font-weight:500;letter-spacing:.18em;t
 .plaque.hit{animation:hit .3s steps(2)}
 @keyframes hit{50%{transform:translateX(-4px);color:#000}}
 
-@media (max-width:760px){
-  .feat.pixel{grid-template-columns:1fr;border-width:48px;border-image:url(media/Sprite-Note.png) 24 fill/48px stretch}
-  .feat.pixel .feat-text{order:0}
+@media (max-width: 760px) {
+  .feat.pixel {
+    grid-template-columns: 1fr;
+    border-width: 72px;
+    /* Recuerda ajustar el padding aquí también si se ve muy apretado en móviles */
+    padding: 24px; 
+    border-image: url(media/Sprite-Note.png) 240 fill / 72px round;
+  }
+  .feat.pixel .feat-text { order: 0; }
 }
 @media (prefers-reduced-motion:reduce){.spr img,.plaque{animation:none!important}.spr{transition:none}}
