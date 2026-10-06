@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jaime Ayoub — Portafolio de videojuegos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="rough" x="-8%" y="-8%" width="116%" height="116%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="4" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="16"/>
+  </filter>
+  <filter id="rough2" x="-10%" y="-10%" width="120%" height="120%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.07" numOctaves="2" seed="9" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="4"/>
+  </filter>
+  <filter id="mist"><feGaussianBlur stdDeviation="2.2"/></filter>
+</svg>
+<div class="wrap">
+  <header>
+    <p class="role">Programador de videojuegos</p>
+    <h1>Jaime Ayoub</h1>
+    <p class="lead">Estudio programación de videojuegos en SAE Institute México. Hago juegos en Unity y Unreal, además de proyectos de gráficos con OpenGL.</p>
+    <div class="links">
+      <a href="https://github.com/JaimeAyoub" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://pickleman325.itch.io/" target="_blank" rel="noopener">itch.io</a>
+    </div>
+  </header>
+
+  <h2>Destacados</h2>
+  <div id="featured"></div>
+
+  <h2>Más proyectos</h2>
+  <div class="list" id="list"></div>
+
+  <footer>© <span id="y"></span> Jaime Ayoub Ramos</footer>
+</div>
+
+<dialog id="dlg" aria-labelledby="dTitle">
+  <button class="close" id="dClose" aria-label="Cerrar">×</button>
+  <div class="d-body">
+    <div class="d-media" id="dMedia"></div>
+    <h3 class="d-title" id="dTitle"></h3>
+    <div class="tags" id="dTags"></div>
+    <p class="d-long" id="dLong"></p>
+    <h4>Lo que hice</h4>
+    <ul class="d-did" id="dDid"></ul>
+    <a class="d-btn" id="dRepo" target="_blank" rel="noopener">Ver código en GitHub ↗</a>
+  </div>
+</dialog>
+
+<script>
+// Edita esta lista para agregar o cambiar proyectos.
+// media: GIF o imagen (carpeta media/). long: descripción larga. did: lista de lo que hiciste.
+const projects = [
+  {name:"Excriblecism", feat:"pixel", tags:["C#","Unity"], media:"media/exorcist.gif",
+   // sprites: pon tus PNG en media/sprites/ y cambia los nombres aquí. Los que no existan se ignoran.
+   sprites:["media/sprites/sprite1.png","media/sprites/sprite2.png","media/sprites/sprite3.png","media/sprites/sprite4.png"],
+   desc:"Videojuego en desarrollo donde eres un exorcista y, para combatir demonios, tienes que escribir las oraciones.",
+   long:"Videojuego en desarrollo donde eres un exorcista y, para combatir demonios, tienes que escribir las oraciones. Escribe aquí más contexto: el género, la idea central, el estado del proyecto.",
+   did:["Describe aquí una cosa que programaste.","Describe aquí otra (sistemas, herramientas, UI…).","Y una más."],
+   repo:"https://github.com/JaimeAyoub/Exorcist"},
+  {name:"I Lost My Keys", tags:["C#","Unity","Móvil"], media:"media/i-lost-my-keys.gif",
+   desc:"Minijuego para celular en el que \"moldeas\" llaves para abrir tantas puertas como puedas.",
+   long:"Minijuego para celular en el que \"moldeas\" llaves para abrir tantas puertas como puedas. Escribe aquí más contexto: cómo se juega, para qué evento o jam lo hiciste.",
+   did:["Describe aquí una cosa que programaste.","Describe aquí otra.","Y una más."],
+   repo:"https://github.com/JaimeAyoub/I-lost-my-keys"},
+  {name:"Tesis en Unreal 5", feat:"ink", tags:["C++","Unreal 5","Shaders","VFX"], media:"media/tesis-unreal.gif",
+   desc:"Mi tesis: shaders y VFX que imitan el estilo Sumi-e, con combate Hack 'n' Slash.",
+   long:"Mi tesis: shaders y VFX que imitan el estilo Sumi-e, con combate Hack 'n' Slash. Escribe aquí más contexto: el objetivo, la investigación, los resultados.",
+   did:["Describe aquí un shader o efecto que hiciste.","Describe aquí algo del combate.","Y una más."],
+   repo:"https://github.com/JaimeAyoub/TesisPeroAhoraEnUnreal"},
+  {name:"Moory Up Cowboy", tags:["C#","Unity","Equipo"], media:"media/moory-up-cowboy.gif",
+   desc:"Proyecto en equipo desarrollado en C#.",
+   long:"Proyecto en equipo desarrollado en C#. Escribe aquí más contexto: de qué trata, el tamaño del equipo, tu rol.",
+   did:["Describe aquí tu rol en el equipo.","Describe aquí una cosa que programaste.","Y una más."],
+   repo:"https://github.com/AlexGuzmanSAE/MooryUpCowboy"},
+  {name:"Cómputo Gráfico Final", tags:["C++","OpenGL"], media:"media/computo-grafico.gif",
+   desc:"Proyecto final de cómputo gráfico hecho con OpenGL.",
+   long:"Proyecto final de cómputo gráfico hecho con OpenGL. Escribe aquí más contexto: qué renderiza, qué técnicas usaste.",
+   did:["Describe aquí una técnica que implementaste.","Describe aquí otra.","Y una más."],
+   repo:"https://github.com/JaimeAyoub/ComputoGraficoFinal2025"},
+  {name:"Star Fox en Unreal", tags:["Unreal 5"], media:"media/starfox-unreal.gif",
+   desc:"Pequeño juego de naves al estilo Star Fox hecho en Unreal 5.",
+   long:"Pequeño juego de naves al estilo Star Fox hecho en Unreal 5. Escribe aquí más contexto: mecánicas, qué aprendiste.",
+   did:["Describe aquí una cosa que programaste.","Describe aquí otra.","Y una más."],
+   repo:"https://github.com/JaimeAyoub/StarFoxUnreal"}
+];
+
+const list=document.getElementById("list");
+const dlg=document.getElementById("dlg");
+
+function placeholder(){const d=document.createElement("div");d.className="ph";d.textContent="GIF / imagen";return d}
+function mediaEl(p){
+  if(!p.media)return placeholder();
+  const img=document.createElement("img");
+  img.src=p.media;img.alt="Vista previa de "+p.name;img.loading="lazy";
+  img.onerror=()=>img.replaceWith(placeholder());
+  return img;
+}
+function fillTags(el,tags){el.textContent="";tags.forEach(t=>{const s=document.createElement("span");s.textContent=t;el.appendChild(s)})}
+
+function openProject(p){
+  document.getElementById("dMedia").replaceChildren(mediaEl(p));
+  document.getElementById("dTitle").textContent=p.name;
+  fillTags(document.getElementById("dTags"),p.tags);
+  document.getElementById("dLong").textContent=p.long||p.desc;
+  const ul=document.getElementById("dDid");ul.textContent="";
+  (p.did||[]).forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.appendChild(li)});
+  document.getElementById("dRepo").href=p.repo;
+  dlg.showModal();
+  document.body.classList.add("lock");
+  dlg.scrollTop=0;
+}
+
+
+const L="M0,0 Q24,-9 56,-1 Q26,7 0,0Z";
+const INK_DECO=`<svg class="ink-deco ink-mount" viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
+<path filter="url(#mist)" fill="#000" opacity=".09" d="M0,200V110Q70,40 140,100T290,80T430,115Q510,30 600,95T800,70V200Z"/>
+<path filter="url(#mist)" fill="#000" opacity=".15" d="M0,200V150Q90,90 180,140T360,125T520,150Q620,80 710,135T800,120V200Z"/>
+<path fill="#000" opacity=".22" filter="url(#rough)" d="M0,200V175Q110,130 220,170T430,160T640,178T800,165V200Z"/>
+</svg>
+<svg class="ink-deco ink-bamboo" viewBox="0 0 110 420" aria-hidden="true"><g filter="url(#rough2)" fill="#0a0a0a" stroke="#0a0a0a" stroke-linecap="round">
+<path stroke-width="9" d="M40,420V310M40,302V200M40,192V96M40,88V10"/>
+<path stroke-width="6" opacity=".7" d="M82,420V340M82,333V250M82,243V150M82,143V60"/>
+<g stroke="none">
+<path transform="translate(40,192) rotate(-28)" d="${L}"/><path transform="translate(40,192) rotate(-62) scale(.8)" d="${L}"/>
+<path transform="translate(40,88) rotate(-20)" d="${L}"/><path transform="translate(40,88) rotate(-150) scale(.9)" d="${L}"/>
+<path transform="translate(40,302) rotate(-155)" d="${L}"/><path transform="translate(82,243) rotate(-20) scale(.7)" d="${L}" opacity=".7"/>
+<path transform="translate(82,143) rotate(-160) scale(.7)" d="${L}" opacity=".7"/>
+<circle cx="14" cy="300" r="4"/><circle cx="22" cy="322" r="2"/><circle cx="100" cy="210" r="3"/><circle cx="8" cy="270" r="1.8"/>
+</g></g></svg>
+<span class="ink-cap" aria-hidden="true">水墨画</span>`;
+
+const STAGE=`<div class="stage" aria-hidden="true"><div class="stage-sprites"></div></div>`;
+const PLAQUE=`<div class="plaque" aria-hidden="true"><b>Oración</b><div class="typer"><span class="ok"></span><span class="cur"></span><span class="rest"></span></div></div>`;
+
+function setupScene(s,p){
+  const nave=s.querySelector(".stage"),box=nave.querySelector(".stage-sprites"),pl=s.querySelector(".plaque");
+  // Sprites 2D que siempre miran a la cámara (billboards): [x%, base%, alto%, parallax]
+  const slots=[[50,10,84,6],[28,4,92,12],[72,4,92,12],[12,10,76,3],[88,10,76,3]];
+  (p.sprites||[]).slice(0,slots.length).forEach((src,i)=>{
+    const [x,b,hh,k]=slots[i];
+    const d=document.createElement("div");d.className="spr";d.hidden=true;
+    d.style.cssText=`--x:${x};--b:${b};--h:${hh};--k:${k};z-index:${30-b}`;
+    d.innerHTML='<i class="shadow"></i>';
+    const im=new Image();im.alt="";im.src=src;
+    im.onload=()=>{d.appendChild(im);d.hidden=false};
+    box.appendChild(d);
+  });
+  s.addEventListener("pointermove",e=>{const r=nave.getBoundingClientRect();
+    nave.style.setProperty("--px",Math.max(-1,Math.min(1,((e.clientX-r.left)/r.width-.5)*2)).toFixed(2))});
+  s.addEventListener("pointerleave",()=>nave.style.setProperty("--px",0));
+
+  const ok=pl.querySelector(".ok"),cur=pl.querySelector(".cur"),rest=pl.querySelector(".rest");
+  const phr=["pater noster qui es in caelis","libera nos a malo","exorcizamus te omnis spiritus immunde","vade retro satana"];
+  let pi=0,ci=0,t=null;
+  const draw=()=>{const x=phr[pi];ok.textContent=x.slice(0,ci);cur.textContent=x[ci]||"";rest.textContent=x.slice(ci+1)};
+  const tick=()=>{
+    const x=phr[pi];
+    if(ci>3&&Math.random()<.05){pl.classList.add("hit");setTimeout(()=>pl.classList.remove("hit"),300);ci=0}
+    else{ci++;if(ci>=x.length){pi=(pi+1)%phr.length;ci=0}}
+    draw();t=setTimeout(tick,90+Math.random()*130);
+  };
+  draw();
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches||!("IntersectionObserver" in window)){ci=12;draw();return}
+  new IntersectionObserver(es=>{if(es[0].isIntersecting){if(!t)tick()}else{clearTimeout(t);t=null}}).observe(s);
+}
+const featured=document.getElementById("featured");
+["ink","pixel"].forEach(k=>{
+  const p=projects.find(x=>x.feat===k);if(!p)return;
+  const s=document.createElement("section");
+  s.className="feat "+k;
+  s.innerHTML='<div class="feat-media"></div><div class="feat-text"><h3></h3><div class="tags"></div><p class="d-long"></p><h4>Lo que hice</h4><ul class="d-did"></ul><a class="d-btn" target="_blank" rel="noopener">Ver código en GitHub ↗</a></div>';
+  s.querySelector(".feat-media").appendChild(mediaEl(p));
+  s.querySelector("h3").textContent=p.name;
+  fillTags(s.querySelector(".tags"),p.tags);
+  s.querySelector(".d-long").textContent=p.long||p.desc;
+  const ul=s.querySelector(".d-did");
+  (p.did||[]).forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.appendChild(li)});
+  s.querySelector(".d-btn").href=p.repo;
+  if(k==="ink"){
+    s.insertAdjacentHTML("afterbegin",INK_DECO);
+    s.querySelector(".feat-text").insertAdjacentHTML("beforeend",'<span class="hanko" aria-hidden="true">墨</span>');
+    if("IntersectionObserver" in window&&!matchMedia("(prefers-reduced-motion: reduce)").matches){
+      s.classList.add("pre");
+      new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){requestAnimationFrame(()=>s.classList.remove("pre"));o.disconnect()}},{threshold:.25}).observe(s);
+    }
+  }
+  if(k==="pixel"){
+    s.querySelector(".feat-text").insertAdjacentHTML("afterbegin",'<p class="eyebrow">✝ Horror · Typing</p>');
+    s.insertAdjacentHTML("beforeend",STAGE+PLAQUE);
+    setupScene(s,p);
+  }
+  featured.appendChild(s);
+});
+
+projects.filter(p=>!p.feat).forEach((p,i)=>{
+  const a=document.createElement("div");
+  a.className="item";a.tabIndex=0;a.setAttribute("role","button");a.setAttribute("aria-label","Ver detalles de "+p.name);
+  a.innerHTML='<span class="num"></span><span class="arrow">+</span><div class="info"><h3></h3><p></p><div class="tags"></div></div><div class="media"></div>';
+  a.querySelector(".num").textContent=String(i+1).padStart(2,"0");
+  a.querySelector("h3").textContent=p.name;
+  a.querySelector("p").textContent=p.desc;
+  fillTags(a.querySelector(".tags"),p.tags);
+  a.querySelector(".media").appendChild(mediaEl(p));
+  a.addEventListener("click",()=>openProject(p));
+  a.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openProject(p)}});
+  list.appendChild(a);
+});
+
+document.getElementById("dClose").addEventListener("click",()=>dlg.close());
+dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+dlg.addEventListener("close",()=>document.body.classList.remove("lock"));
+document.getElementById("y").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
