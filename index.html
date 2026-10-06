@@ -51,6 +51,24 @@
   </div>
 </dialog>
 
+<dialog id="big" class="big" aria-labelledby="bTitle">
+  <div class="big-inner">
+    <div class="big-deco" aria-hidden="true"></div>
+    <button class="close" id="bClose" aria-label="Cerrar">×</button>
+    <p class="eyebrow" id="bEyebrow"></p>
+    <h3 class="big-title" id="bTitle"></h3>
+    <div class="tags" id="bTags"></div>
+    <div class="big-hero" id="bHero"></div>
+    <p class="big-long" id="bLong"></p>
+    <div class="big-sections" id="bSecs"></div>
+    <h4>Lo que hice</h4>
+    <ul class="d-did" id="bDid"></ul>
+    <h4 id="bGalH">Galería</h4>
+    <div class="big-gallery" id="bGal"></div>
+    <a class="d-btn" id="bRepo" target="_blank" rel="noopener">Ver código en GitHub ↗</a>
+  </div>
+</dialog>
+
 <script>
 // Edita esta lista para agregar o cambiar proyectos.
 // media: GIF o imagen (carpeta media/). long: descripción larga. did: lista de lo que hiciste.
@@ -61,6 +79,8 @@ const projects = [
    desc:"Videojuego en desarrollo donde eres un exorcista y, para combatir demonios, tienes que escribir las oraciones.",
    long:"Videojuego en desarrollo donde eres un exorcista y, para combatir demonios, tienes que escribir las oraciones. Escribe aquí más contexto: el género, la idea central, el estado del proyecto.",
    did:["Describe aquí una cosa que programaste.","Describe aquí otra (sistemas, herramientas, UI…).","Y una más."],
+   sections:[{h:"La idea",t:"Escribe aquí de qué trata y qué querías lograr."},{h:"El reto técnico",t:"Escribe aquí qué fue lo más difícil y cómo lo resolviste."},{h:"Resultado",t:"Escribe aquí cómo terminó y qué aprendiste."}],
+   gallery:[{src:"media/excriblecism/01.gif",cap:"Describe esta imagen o GIF."},{src:"media/excriblecism/02.gif",cap:"Describe esta imagen o GIF."},{src:"media/excriblecism/03.png",cap:"Describe esta imagen o GIF."},{src:"media/excriblecism/04.png",cap:"Describe esta imagen o GIF."}],
    repo:"https://github.com/JaimeAyoub/Exorcist"},
   {name:"I Lost My Keys", tags:["C#","Unity","Móvil"], media:"media/i-lost-my-keys.gif",
    desc:"Minijuego para celular en el que \"moldeas\" llaves para abrir tantas puertas como puedas.",
@@ -71,6 +91,8 @@ const projects = [
    desc:"Mi tesis: shaders y VFX que imitan el estilo Sumi-e, con combate Hack 'n' Slash.",
    long:"Mi tesis: shaders y VFX que imitan el estilo Sumi-e, con combate Hack 'n' Slash. Escribe aquí más contexto: el objetivo, la investigación, los resultados.",
    did:["Describe aquí un shader o efecto que hiciste.","Describe aquí algo del combate.","Y una más."],
+   sections:[{h:"La idea",t:"Escribe aquí de qué trata y qué querías lograr."},{h:"El reto técnico",t:"Escribe aquí qué fue lo más difícil y cómo lo resolviste."},{h:"Resultado",t:"Escribe aquí cómo terminó y qué aprendiste."}],
+   gallery:[{src:"media/tesis/01.gif",cap:"Describe esta imagen o GIF."},{src:"media/tesis/02.gif",cap:"Describe esta imagen o GIF."},{src:"media/tesis/03.png",cap:"Describe esta imagen o GIF."},{src:"media/tesis/04.png",cap:"Describe esta imagen o GIF."}],
    repo:"https://github.com/JaimeAyoub/TesisPeroAhoraEnUnreal"},
   {name:"Moory Up Cowboy", tags:["C#","Unity","Equipo"], media:"media/moory-up-cowboy.gif",
    desc:"Proyecto en equipo desarrollado en C#.",
@@ -95,6 +117,12 @@ const dlg=document.getElementById("dlg");
 function placeholder(){const d=document.createElement("div");d.className="ph";d.textContent="GIF / imagen";return d}
 function mediaEl(p){
   if(!p.media)return placeholder();
+  if(/\.(mp4|webm)$/i.test(p.media)){
+    const v=document.createElement("video");
+    v.src=p.media;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;v.setAttribute("muted","");
+    v.onerror=()=>v.replaceWith(placeholder());
+    return v;
+  }
   const img=document.createElement("img");
   img.src=p.media;img.alt="Vista previa de "+p.name;img.loading="lazy";
   img.onerror=()=>img.replaceWith(placeholder());
@@ -168,6 +196,41 @@ function setupScene(s,p){
   if(matchMedia("(prefers-reduced-motion: reduce)").matches||!("IntersectionObserver" in window)){ci=12;draw();return}
   new IntersectionObserver(es=>{if(es[0].isIntersecting){if(!t)tick()}else{clearTimeout(t);t=null}}).observe(s);
 }
+const big=document.getElementById("big");
+const $=id=>document.getElementById(id);
+function openBig(p){
+  big.className="big "+p.feat;
+  big.querySelector(".big-deco").innerHTML=p.feat==="ink"?INK_DECO:"";
+  $("bEyebrow").textContent=p.feat==="ink"?"Tesis · Sumi-e":"Horror · Typing";
+  $("bTitle").textContent=p.name;
+  fillTags($("bTags"),p.tags);
+  $("bHero").replaceChildren(mediaEl(p));
+  $("bLong").textContent=p.long||p.desc;
+  const secs=$("bSecs");secs.textContent="";
+  (p.sections||[]).forEach(s=>{
+    const d=document.createElement("div");d.className="big-sec";
+    const h4=document.createElement("h4"),t=document.createElement("p");
+    h4.textContent=s.h;t.textContent=s.t;d.append(h4,t);secs.appendChild(d);
+  });
+  const ul=$("bDid");ul.textContent="";
+  (p.did||[]).forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.appendChild(li)});
+  const gal=$("bGal");gal.textContent="";
+  (p.gallery||[]).forEach(g=>{
+    const f=document.createElement("figure");
+    f.appendChild(mediaEl({media:g.src,name:g.cap||p.name}));
+    if(g.cap){const c=document.createElement("figcaption");c.textContent=g.cap;f.appendChild(c)}
+    f.addEventListener("click",()=>f.classList.toggle("wide"));
+    gal.appendChild(f);
+  });
+  $("bGalH").hidden=gal.hidden=!(p.gallery&&p.gallery.length);
+  $("bRepo").href=p.repo;
+  big.showModal();
+  document.body.classList.add("lock");
+  big.scrollTop=0;
+}
+$("bClose").addEventListener("click",()=>big.close());
+big.addEventListener("click",e=>{if(e.target===big)big.close()});
+big.addEventListener("close",()=>document.body.classList.remove("lock"));
 const featured=document.getElementById("featured");
 ["ink","pixel"].forEach(k=>{
   const p=projects.find(x=>x.feat===k);if(!p)return;
@@ -181,6 +244,10 @@ const featured=document.getElementById("featured");
   const ul=s.querySelector(".d-did");
   (p.did||[]).forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.appendChild(li)});
   s.querySelector(".d-btn").href=p.repo;
+  s.querySelector(".d-btn").insertAdjacentHTML("afterend",' <button class="d-more" type="button">Ver detalle +</button>');
+  s.setAttribute("role","button");s.tabIndex=0;s.setAttribute("aria-label","Ver detalle de "+p.name);
+  s.addEventListener("click",e=>{if(e.target.closest(".d-btn"))return;openBig(p)});
+  s.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target===s){e.preventDefault();openBig(p)}});
   if(k==="ink"){
     s.insertAdjacentHTML("afterbegin",INK_DECO);
     s.querySelector(".feat-text").insertAdjacentHTML("beforeend",'<span class="hanko" aria-hidden="true">墨</span>');
