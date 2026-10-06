@@ -168,73 +168,50 @@ dialog h4{margin:0 0 12px;font-size:.8rem;font-weight:500;letter-spacing:.18em;t
 }
 @media (prefers-reduced-motion:reduce){.feat.ink *,.feat.ink::after{transition:none!important}}
 
-/* ---------- Excriblecism: nota de pergamino pixel art (sin repetir) ---------- */
-.feat.pixel {
-  --w0: #100b06; --w3: #4a3322; --ink: #24160a; --ink2: #3e2a17; --ink3: #6b5338;
-  --tex: url(media/ButtonTexture.png);
-  image-rendering: pixelated;
-  isolation: isolate;
-  grid-template-columns: 1fr 1.15fr;
-  color: var(--ink);
-  font-family: "IM Fell English", Georgia, "Times New Roman", serif;
-  
-  /* 1. AUMENTAR PADDING (Empuja el texto hacia el centro) */
-  padding: 32px; /* Antes era 4px. Ajusta este número (ej. 40px) si aún roza los bordes */
-  box-sizing: border-box; /* Asegura que el padding no desborde el ancho total */
-  
-  border-radius: 0;
-  box-shadow: none;
-  background: none;
-  
-  border: 72px solid transparent;
-  
-  /* 2. CORTE (SLICE) */
-  /* Si sigues viendo "dientes" oscuros repitiéndose en el centro del fondo, 
-     cambia el 24 por un número mayor como 32 o 40 (el tamaño de tus esquinas en el PNG) */
-  border-image: url(media/Sprite-Note.png) 240 fill / 40px round;
-  
-  filter: drop-shadow(8px 8px 0 rgba(0,0,0,.5));
-}
-.feat.pixel>*{position:relative;z-index:1}
-.feat.pixel .feat-text{order:-1;padding:0;background:none;border:0}
-.eyebrow{margin:0 0 10px;font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink3)}
-.feat.pixel h3{font-family:"UnifrakturMaguntia","Old English Text MT",Georgia,serif;font-weight:400;color:#1a0f06;
-  font-size:clamp(2.2rem,5.5vw,3.4rem);letter-spacing:.01em;line-height:1.05;text-shadow:none}
-.feat.pixel .d-long{color:var(--ink2);font-size:1.1rem}
-.feat.pixel .tags span{border-radius:0;border:2px solid var(--ink2);background:transparent;font-family:inherit;color:var(--ink2)}
-.feat.pixel h4{color:var(--ink3)}
-.feat.pixel .d-did{list-style:none;padding:0;color:var(--ink)}
+/* ---------- Excriblecism: pixel art simple (gris) ---------- */
+.feat>*{min-width:0}                       /* evita que el texto largo ensanche la sección en celular */
+.feat.pixel{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);background:var(--g1);border:4px solid var(--g6);
+  box-shadow:10px 10px 0 var(--g3);font-family:"Courier New",ui-monospace,monospace;image-rendering:pixelated}
+.feat.pixel .feat-text{order:-1}
+.eyebrow{margin:0 0 10px;font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;color:var(--g4)}
+.feat.pixel h3{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;text-transform:uppercase;letter-spacing:.06em;overflow-wrap:anywhere}
+.feat.pixel h3::after{content:"_";animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.feat.pixel .feat-media{position:relative;padding:6px;background:var(--g0);border:4px solid var(--g6)}
+.feat.pixel .feat-media img{image-rendering:pixelated}
+.feat.pixel .feat-media::after{content:"";position:absolute;inset:6px;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 2px,transparent 2px 4px)}
+.feat.pixel .tags span{border-radius:0;border:2px solid var(--g6);background:none;font-family:inherit;color:var(--g6)}
+.feat.pixel .d-did{list-style:none;padding:0}
 .feat.pixel .d-did li{padding:0}
-.feat.pixel .d-did li::before{content:"✝ ";color:var(--ink3)}
-.feat.pixel .d-btn{font-family:inherit;color:#e8dccb;padding:4px 12px;border-radius:0;background:transparent;
-  border:12px solid transparent;border-image:var(--tex) 3 fill/12px stretch;transition:filter .1s}
-.feat.pixel .d-btn:hover{background:transparent;filter:brightness(1.5)}
+.feat.pixel .d-did li::before{content:"> ";color:var(--g4)}
+.feat.pixel .d-btn{border-radius:0;box-shadow:5px 5px 0 var(--g4);transition:transform .1s,box-shadow .1s}
+.feat.pixel .d-btn:hover{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--g4);background:var(--g6)}
 
-/* Ventana gótica con arco escalonado (pixel art), pegada a la nota */
-.feat.pixel .feat-media{padding:8px;background:var(--w0);border-radius:0;box-shadow:none;
-  clip-path:polygon(0 24%,4% 24%,4% 16%,10% 16%,10% 9%,20% 9%,20% 4%,35% 4%,35% 0,65% 0,65% 4%,80% 4%,80% 9%,90% 9%,90% 16%,96% 16%,96% 24%,100% 24%,100% 100%,0 100%)}
-.feat.pixel .feat-media img,.feat.pixel .feat-media .ph{aspect-ratio:4/3;border-radius:0;
-  clip-path:polygon(0 24%,4% 24%,4% 16%,10% 16%,10% 9%,20% 9%,20% 4%,35% 4%,35% 0,65% 0,65% 4%,80% 4%,80% 9%,90% 9%,90% 16%,96% 16%,96% 24%,100% 24%,100% 100%,0 100%)}
+/* Sprites 2D que siempre miran a cámara (la franja solo aparece si carga al menos un sprite) */
+.stage{grid-column:1/-1;position:relative;height:clamp(140px,22vw,190px);overflow:hidden;
+  background:linear-gradient(transparent 80%,var(--g3) 80%),var(--g0);border:4px solid var(--g6)}
+.stage[hidden]{display:none}
+.stage-sprites{position:absolute;inset:0}
+.spr{position:absolute;left:calc(var(--x)*1%);bottom:calc(var(--b)*1%);height:calc(var(--h)*1%);width:0;
+  translate:calc(var(--px,0)*var(--k)*1px) 0;transition:translate .3s ease-out}
+.spr img{position:absolute;left:50%;bottom:0;height:100%;width:auto;image-rendering:pixelated;transform:translateX(-50%);animation:sway 2.4s steps(2) infinite}
+.spr:nth-child(even) img{animation-delay:.6s}
+.spr .shadow{position:absolute;left:0;bottom:-3%;width:max(44px,calc(var(--h)*.9px));height:12%;transform:translateX(-50%);
+  background:radial-gradient(ellipse,rgba(0,0,0,.8),transparent 70%)}
+@keyframes sway{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-50%) translateY(-3px)}}
 
-
-
-/* La oración se "escribe" directamente sobre el papel */
-.plaque{grid-column:1/-1;display:flex;flex-direction:column;gap:6px;padding:10px 0 0;margin-top:6px;
-  border:0;border-top:2px dashed var(--ink3);background:none}
-.plaque b{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink3);font-weight:400}
-.typer{font-size:1.35rem;white-space:nowrap;overflow:hidden}
-.typer .ok{color:var(--ink)}.typer .cur{background:var(--ink);color:#d1b997}.typer .rest{color:rgba(36,22,10,.35)}
+/* Línea de tecleo */
+.plaque{grid-column:1/-1;display:flex;flex-direction:column;gap:4px;padding:12px 16px;background:var(--g0);border:4px solid var(--g6)}
+.plaque b{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--g4);font-weight:400}
+.typer{font-size:clamp(.95rem,3.6vw,1.2rem);white-space:normal;overflow-wrap:anywhere;min-height:3em}
+.typer .ok{color:var(--g6)}.typer .cur{background:var(--g6);color:var(--g0)}.typer .rest{color:var(--g4)}
 .plaque.hit{animation:hit .3s steps(2)}
-@keyframes hit{50%{transform:translateX(-4px);color:#000}}
+@keyframes hit{50%{background:var(--g3);transform:translateX(-4px)}}
 
-@media (max-width: 760px) {
-  .feat.pixel {
-    grid-template-columns: 1fr;
-    border-width: 72px;
-    /* Recuerda ajustar el padding aquí también si se ve muy apretado en móviles */
-    padding: 24px; 
-    border-image: url(media/Sprite-Note.png) 240 fill / 72px round;
-  }
-  .feat.pixel .feat-text { order: 0; }
+@media (max-width:760px){
+  .feat.pixel{grid-template-columns:minmax(0,1fr);box-shadow:6px 6px 0 var(--g3)}
+  .feat.pixel .feat-text{order:0}
 }
-@media (prefers-reduced-motion:reduce){.spr img,.plaque{animation:none!important}.spr{transition:none}}
+@media (min-width:761px){.typer{min-height:1.6em}}
+@media (prefers-reduced-motion:reduce){.spr img,.plaque,.feat.pixel h3::after{animation:none!important}.spr{transition:none}}

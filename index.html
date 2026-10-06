@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Jaime Ayoub — Portafolio de videojuegos</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -137,7 +134,7 @@ const INK_DECO=`<svg class="ink-deco ink-mount" viewBox="0 0 800 200" preserveAs
 </g></g></svg>
 <span class="ink-cap" aria-hidden="true">水墨画</span>`;
 
-const STAGE=`<div class="stage" aria-hidden="true"><div class="stage-sprites"></div></div>`;
+const STAGE=`<div class="stage" hidden aria-hidden="true"><div class="stage-sprites"></div></div>`;
 const PLAQUE=`<div class="plaque" aria-hidden="true"><b>Oración</b><div class="typer"><span class="ok"></span><span class="cur"></span><span class="rest"></span></div></div>`;
 
 function setupScene(s,p){
@@ -150,7 +147,7 @@ function setupScene(s,p){
     d.style.cssText=`--x:${x};--b:${b};--h:${hh};--k:${k};z-index:${30-b}`;
     d.innerHTML='<i class="shadow"></i>';
     const im=new Image();im.alt="";im.src=src;
-    im.onload=()=>{d.appendChild(im);d.hidden=false};
+    im.onload=()=>{d.appendChild(im);d.hidden=false;nave.hidden=false};
     box.appendChild(d);
   });
   s.addEventListener("pointermove",e=>{const r=nave.getBoundingClientRect();
@@ -193,7 +190,7 @@ const featured=document.getElementById("featured");
     }
   }
   if(k==="pixel"){
-    s.querySelector(".feat-text").insertAdjacentHTML("afterbegin",'<p class="eyebrow">✝ Horror · Typing</p>');
+    s.querySelector(".feat-text").insertAdjacentHTML("afterbegin",'<p class="eyebrow">Horror · Typing</p>');
     s.insertAdjacentHTML("beforeend",STAGE+PLAQUE);
     setupScene(s,p);
   }
