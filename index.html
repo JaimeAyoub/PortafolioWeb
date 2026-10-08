@@ -82,17 +82,20 @@ const projects = [
    //sections:[{h:"La idea",t:"Escribe aquí de qué trata y qué querías lograr."},{h:"El reto técnico",t:"Escribe aquí qué fue lo más difícil y cómo lo resolviste."},{h:"Resultado",t:"Escribe aquí cómo terminó y qué aprendiste."}],
    gallery:[{src:"media/excriblecism/01.gif",cap:"Shader para muerte del enemigo."},{src:"media/excriblecism/02.gif",cap:"Transición a combate."},{src:"media/excriblecism/03.gif",cap:"Mecánica especial de boss."}],
    repo:"https://github.com/JaimeAyoub/Exorcist"},
-  {name:"I Lost My Keys", tags:["C#","Unity","Móvil"], media:"media/i-lost-my-keys.gif",
+  {name:"I Lost My Keys", feat:"key", tags:["C#","Unity","Móvil"], media:"media/i-lost-my-keys.gif",
    desc:"Minijuego para celular en el que \"moldeas\" llaves para abrir tantas puertas como puedas.",
    long:"Minijuego para celular en el que \"moldeas\" llaves para abrir tantas puertas como puedas. Escribe aquí más contexto: cómo se juega, para qué evento o jam lo hiciste.",
    did:["Describe aquí una cosa que programaste.","Describe aquí otra.","Y una más."],
+   gallery:[{src:"media/keys/01.gif",cap:"Describe esta imagen o GIF."},{src:"media/keys/02.gif",cap:"Describe esta imagen o GIF."},{src:"media/keys/03.png",cap:"Describe esta imagen o GIF."}],
    repo:"https://github.com/JaimeAyoub/I-lost-my-keys"},
   {name:"Tesis en Unreal 5", feat:"ink", tags:["C++","Unreal 5","Shaders","VFX"], media:"media/tesis/tesis-unreal.gif",
    desc:"Mi tesis: Shaders y VFX que imitan el estilo Sumi-e, con combate Hack 'n' Slash.",
    long:"Mi tesis: Shaders y VFX que imitan el estilo Sumi-e, con combate Hack 'n' Slash.", 
    did:["Desarrollo de VFX con Niagara System","Desarrollo de materiales.","Sistemas de combate.","UI."],
    //sections:[{h:"La idea",t:"Escribe aquí de qué trata y qué querías lograr."},{h:"El reto técnico",t:"Escribe aquí qué fue lo más difícil y cómo lo resolviste."},{h:"Resultado",t:"Escribe aquí cómo terminó y qué aprendiste."}],
-   gallery:[{src:"media/tesis/01.gif",cap:"Efecto para ataque cargado."},{src:"media/tesis/02.gif",cap:"Impact frame para ciertos ataques."},{src:"media/tesis/03.gif",cap:"Hit VFX."},{src:"media/tesis/04.gif",cap:"Muerte del enemigo."},{src:"media/tesis/05.gif",cap:"Slam al suelo VFX."},{src:"media/tesis/06.gif",cap:"Shader para meshes."}],
+   gallery:[{src:"media/tesis/01.gif",cap:"Efecto para ataque cargado."},{src:"media/tesis/02.gif",cap:"Impact frame para ciertos ataques."},
+   {src:"media/tesis/03.gif",cap:"Hit VFX."},{src:"media/tesis/04.gif",cap:"Muerte del enemigo."},{src:"media/tesis/05.gif",cap:"Slam al suelo VFX."},
+   {src:"media/tesis/06.gif",cap:"Shader para meshes."}],
    repo:"https://github.com/JaimeAyoub/TesisPeroAhoraEnUnreal"},
   {name:"Moory Up Cowboy", tags:["C#","Unity","Equipo","VR"], media:"media/moory-up-cowboy.gif",
    desc:"Proyecto en equipo desarrollado en C#.",
@@ -162,6 +165,7 @@ const INK_DECO=`<svg class="ink-deco ink-mount" viewBox="0 0 800 200" preserveAs
 </g></g></svg>
 <span class="ink-cap" aria-hidden="true">水墨画</span>`;
 
+const KEYSTRIP=`<div class="key-strip" aria-hidden="true"><img class="kk-key" src="media/key.png" alt=""></div>`;
 const STAGE=`<div class="stage" hidden aria-hidden="true"><div class="stage-sprites"></div></div>`;
 const PLAQUE=`<div class="plaque" aria-hidden="true"><b>Oración</b><div class="typer"><span class="ok"></span><span class="cur"></span><span class="rest"></span></div></div>`;
 
@@ -201,7 +205,7 @@ const $=id=>document.getElementById(id);
 function openBig(p){
   big.className="big "+p.feat;
   big.querySelector(".big-deco").innerHTML=p.feat==="ink"?INK_DECO:"";
-  $("bEyebrow").textContent=p.feat==="ink"?"Tesis · Sumi-e":"Horror · Typing";
+  $("bEyebrow").textContent=({ink:"Tesis · Sumi-e",pixel:"Horror · Typing",key:"Puzzle · Móvil"})[p.feat]||"";
   $("bTitle").textContent=p.name;
   fillTags($("bTags"),p.tags);
   $("bHero").replaceChildren(mediaEl(p));
@@ -232,7 +236,7 @@ $("bClose").addEventListener("click",()=>big.close());
 big.addEventListener("click",e=>{if(e.target===big)big.close()});
 big.addEventListener("close",()=>document.body.classList.remove("lock"));
 const featured=document.getElementById("featured");
-["ink","pixel"].forEach(k=>{
+["ink","pixel","key"].forEach(k=>{
   const p=projects.find(x=>x.feat===k);if(!p)return;
   const s=document.createElement("section");
   s.className="feat "+k;
@@ -260,6 +264,10 @@ const featured=document.getElementById("featured");
     s.querySelector(".feat-text").insertAdjacentHTML("afterbegin",'<p class="eyebrow">Horror · Typing</p>');
     s.insertAdjacentHTML("beforeend",STAGE+PLAQUE);
     setupScene(s,p);
+  }
+  if(k==="key"){
+    s.querySelector(".feat-text").insertAdjacentHTML("afterbegin",'<p class="eyebrow">Puzzle · Móvil</p>');
+    s.insertAdjacentHTML("beforeend",KEYSTRIP);
   }
   featured.appendChild(s);
 });

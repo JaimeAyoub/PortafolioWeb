@@ -314,3 +314,59 @@ dialog.big.pixel{background:var(--g1);border:4px solid var(--g6);border-radius:0
   dialog.big.pixel{box-shadow:6px 6px 0 var(--g3)}
 }
 @media (prefers-reduced-motion:reduce){.big.pixel .big-title::after{animation:none!important}}
+
+
+/* ---------- I Lost My Keys: UI del juego (azul marino, bisel morado, llave amarilla) ---------- */
+.feat.key{--navy:#272744;--navy2:#1d1d36;--pur:#8b6d9c;--ind:#494d7e;--yel:#fbf236;--tx:#e6e3f5;--tx2:#a49cc0;
+  color:var(--tx);font-family:"Courier New",ui-monospace,monospace;padding:20px;
+  border:12px solid transparent;border-image:url(media/ui-panel.png) 3 fill/12px stretch;image-rendering:pixelated;
+  filter:drop-shadow(8px 8px 0 rgba(0,0,0,.6))}
+.eyebrow{margin:0 0 10px;font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;color:var(--g4)}
+.feat.key .eyebrow{color:var(--pur)}
+.feat.key h3{font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--yel);
+  text-shadow:3px 3px 0 #000;overflow-wrap:anywhere}
+.feat.key .d-long{color:var(--tx2)}
+.feat.key h4{color:var(--pur)}
+.feat.key .tags span{border-radius:0;background:var(--navy2);color:var(--tx);font-family:inherit;border:2px solid;border-color:var(--pur) var(--pur) var(--ind) var(--ind)}
+.feat.key .d-did{list-style:none;padding:0;color:var(--tx)}
+.feat.key .d-did li{padding:0 0 0 30px;position:relative}
+.feat.key .d-did li::before{content:"";position:absolute;left:0;top:.35em;width:22px;height:13px;
+  background:url(media/key.png) center/contain no-repeat}
+.feat.key .feat-media{padding:8px;background:var(--navy2);border:4px solid;border-color:var(--pur) var(--pur) var(--ind) var(--ind);outline:4px solid #000}
+.feat.key .feat-media img{image-rendering:pixelated}
+.feat.key .d-btn{border-radius:0;background:var(--yel);color:#0b0b2a;box-shadow:4px 4px 0 #000;transition:transform .1s,box-shadow .1s}
+.feat.key .d-btn:hover{background:#fff68a;transform:translate(2px,2px);box-shadow:2px 2px 0 #000}
+.feat.key .d-more{border-radius:0;border:2px solid var(--yel);color:var(--yel)}
+.feat.key .d-more:hover{background:var(--yel);color:#0b0b2a}
+
+/* el monito camina hacia la llave */
+.key-strip{grid-column:1/-1;position:relative;height:84px;border-bottom:4px solid var(--ind);overflow:hidden}
+.kk-man{position:absolute;bottom:0;left:0;height:64px;width:auto;image-rendering:pixelated;animation:kk-walk 10s steps(30,end) infinite}
+.kk-key{position:absolute;bottom:6px;right:12px;width:84px;height:auto;animation:kk-bob 1.2s steps(2) infinite}
+@keyframes kk-walk{0%{left:0}90%,100%{left:calc(100% - 170px)}}
+@keyframes kk-bob{50%{transform:translateY(-6px)}}
+@media (max-width:760px){.kk-man{height:52px}.kk-key{width:64px}@keyframes kk-walk{0%{left:0}90%,100%{left:calc(100% - 130px)}}}
+@media (prefers-reduced-motion:reduce){.kk-man,.kk-key{animation:none!important}.kk-man{left:20%}}
+
+/* ventana grande del proyecto */
+dialog.big.key{--navy:#272744;--navy2:#1d1d36;--pur:#8b6d9c;--ind:#494d7e;--yel:#fbf236;--tx:#e6e3f5;--tx2:#a49cc0;
+  background:var(--navy);color:var(--tx);border:8px solid;border-color:var(--pur) var(--pur) var(--ind) var(--ind);border-radius:0;
+  box-shadow:0 0 0 4px #000,10px 10px 0 4px rgba(0,0,0,.6);font-family:"Courier New",ui-monospace,monospace;image-rendering:pixelated}
+.big.key .eyebrow{color:var(--pur)}
+.big.key .big-title{font-size:clamp(1.8rem,5vw,3rem);font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--yel);text-shadow:3px 3px 0 #000}
+.big.key .tags span{border-radius:0;background:var(--navy2);color:var(--tx);font-family:inherit;border:2px solid;border-color:var(--pur) var(--pur) var(--ind) var(--ind)}
+.big.key .big-hero,.big.key .big-gallery figure{padding:6px;background:var(--navy2);border:4px solid;border-color:var(--pur) var(--pur) var(--ind) var(--ind);outline:3px solid #000}
+.big.key .big-long,.big.key .big-sec p{color:var(--tx2)}
+.big.key h4{color:var(--pur)}
+.big.key .big-sec{background:var(--navy2);padding:14px;border:3px solid;border-color:var(--pur) var(--pur) var(--ind) var(--ind)}
+.big.key .d-did{list-style:none;padding:0}
+.big.key .d-did li{padding:0 0 0 30px;position:relative}
+.big.key .d-did li::before{content:"";position:absolute;left:0;top:.35em;width:22px;height:13px;background:url(media/key.png) center/contain no-repeat}
+.big.key .big-gallery figcaption{margin:8px 2px 2px;color:var(--tx2)}
+.big.key .d-btn{border-radius:0;background:var(--yel);color:#0b0b2a;box-shadow:4px 4px 0 #000}
+.big.key .d-btn:hover{background:#fff68a}
+.big.key .close{border-radius:0;background:var(--navy2);border:3px solid var(--yel);color:var(--yel)}
+.big.key .close:hover{background:var(--yel);color:#0b0b2a}
+@media (max-width:760px){dialog.big.key{box-shadow:0 0 0 3px #000,6px 6px 0 3px rgba(0,0,0,.6)}}
+/* la llave es un PNG suave: no usar renderizado "pixelado" en ella */
+.kk-key,.feat.key .d-did li::before,.big.key .d-did li::before{image-rendering:auto}
