@@ -61,6 +61,7 @@
     <div class="big-hero" id="bHero"></div>
     <p class="big-long" id="bLong"></p>
     <div class="big-sections" id="bSecs"></div>
+    <div class="big-extra" id="bExtra"></div>
     <h4>Lo que hice</h4>
     <ul class="d-did" id="bDid"></ul>
     <h4 id="bGalH">Galería</h4>
@@ -85,7 +86,7 @@ const projects = [
   {name:"I Lost My Keys", feat:"key", tags:["C#","Unity","Móvil"], media:"media/keys/Principal.gif",
    desc:"Minijuego para celular en el que \"moldeas\" llaves para abrir tantas puertas como puedas.",
    long:"Minijuego para celular en el que \"moldeas\" llaves para abrir tantas puertas como puedas.",
-   did:["Desarrollo de sistema de chequeo de grid","Game Loop.","Basicamente todo el juego."],
+   did:["Desarrollo de sistema de chequeo de grid","Game Loop.","Básicamente todo el juego."],
    gallery:[{src:"media/keys/01.png",cap:"Menú de inicio."},{src:"media/keys/01.gif",cap:"Loop del juego."},{src:"media/keys/02.png",cap:"Game Over."}],
    repo:"https://github.com/JaimeAyoub/I-lost-my-keys"},
   {name:"Tesis en Unreal 5", feat:"ink", tags:["C++","Unreal 5","Shaders","VFX"], media:"media/tesis/tesis-unreal.gif",
@@ -107,10 +108,11 @@ const projects = [
    long:"Proyecto final de cómputo gráfico hecho con OpenGL. Escribe aquí más contexto: qué renderiza, qué técnicas usaste.",
    did:["Describe aquí una técnica que implementaste.","Describe aquí otra.","Y una más."],
    repo:"https://github.com/JaimeAyoub/ComputoGraficoFinal2025"},
-  {name:"Star Fox en Unreal", tags:["Unreal 5"], media:"media/starfox-unreal.gif",
-   desc:"Pequeño juego de naves al estilo Star Fox hecho en Unreal 5.",
-   long:"Pequeño juego de naves al estilo Star Fox hecho en Unreal 5. Escribe aquí más contexto: mecánicas, qué aprendiste.",
-   did:["Describe aquí una cosa que programaste.","Describe aquí otra.","Y una más."],
+  {name:"Star Fox en Unreal", feat:"fox", tags:["Unreal 5","VFX"], media:"media/starfox-unreal.gif",
+   desc:"Eres un virus dentro de una PC y derrotas a las naves que protegen la computadora. Hecho en Unreal 5 al estilo Star Fox.",
+   long:"Juego de naves al estilo Star Fox hecho en Unreal 5. Eres un virus dentro de una PC y tu misión es derrotar a las naves que actúan como protectores de la computadora.",
+   did:["VFX con flipbooks: explosiones, destellos y efectos de energía.","Describe aquí otra cosa que programaste.","Y una más."],
+   gallery:[{src:"media/starfox/01.gif",cap:"Describe esta imagen o GIF."},{src:"media/starfox/02.gif",cap:"Describe esta imagen o GIF."}],
    repo:"https://github.com/JaimeAyoub/StarFoxUnreal"}
 ];
 
@@ -165,6 +167,10 @@ const INK_DECO=`<svg class="ink-deco ink-mount" viewBox="0 0 800 200" preserveAs
 </g></g></svg>
 <span class="ink-cap" aria-hidden="true">水墨画</span>`;
 
+const fxTile=(f,n,fw,fh,t)=>`<div class="fx" style="--n:${n};--s:${n-1};--ar:${fw}/${fh};--t:${t}s;background-image:url(media/starfox/${f})"></div>`;
+const FXROW=`<div class="fx-row">${fxTile("fx-sun.png",4,32,32,1)}${fxTile("fx-boom.png",6,56,48,.9)}${fxTile("fx-spark.png",4,64,63,1.1)}</div>`;
+const FOXSTRIP=`<div class="fox-strip" aria-hidden="true">${FXROW}</div>`;
+const FOXFX=`<h4>VFX · flipbooks</h4>${FXROW.replace('class="fx-row"','class="fx-row big-fx"')}`;
 const KEYSTRIP=`<div class="key-strip" aria-hidden="true"><img class="kk-key" src="media/key.png" alt=""></div>`;
 const STAGE=`<div class="stage" hidden aria-hidden="true"><div class="stage-sprites"></div></div>`;
 const PLAQUE=`<div class="plaque" aria-hidden="true"><b>Oración</b><div class="typer"><span class="ok"></span><span class="cur"></span><span class="rest"></span></div></div>`;
@@ -205,11 +211,12 @@ const $=id=>document.getElementById(id);
 function openBig(p){
   big.className="big "+p.feat;
   big.querySelector(".big-deco").innerHTML=p.feat==="ink"?INK_DECO:"";
-  $("bEyebrow").textContent=({ink:"Tesis · Sumi-e",pixel:"Horror · Typing",key:"Arcade · Móvil"})[p.feat]||"";
+  $("bEyebrow").textContent=({ink:"Tesis · Sumi-e",pixel:"Horror · Typing",key:"Arcade · Móvil",fox:"Virus · Shooter"})[p.feat]||"";
   $("bTitle").textContent=p.name;
   fillTags($("bTags"),p.tags);
   $("bHero").replaceChildren(mediaEl(p));
   $("bLong").textContent=p.long||p.desc;
+  $("bExtra").innerHTML=p.feat==="fox"?FOXFX:"";
   const secs=$("bSecs");secs.textContent="";
   (p.sections||[]).forEach(s=>{
     const d=document.createElement("div");d.className="big-sec";
@@ -236,7 +243,7 @@ $("bClose").addEventListener("click",()=>big.close());
 big.addEventListener("click",e=>{if(e.target===big)big.close()});
 big.addEventListener("close",()=>document.body.classList.remove("lock"));
 const featured=document.getElementById("featured");
-["ink","pixel","key"].forEach(k=>{
+["ink","pixel","key","fox"].forEach(k=>{
   const p=projects.find(x=>x.feat===k);if(!p)return;
   const s=document.createElement("section");
   s.className="feat "+k;
@@ -264,6 +271,11 @@ const featured=document.getElementById("featured");
     s.querySelector(".feat-text").insertAdjacentHTML("afterbegin",'<p class="eyebrow">Horror · Typing</p>');
     s.insertAdjacentHTML("beforeend",STAGE+PLAQUE);
     setupScene(s,p);
+  }
+  if(k==="fox"){
+    s.insertAdjacentHTML("afterbegin",'<div class="win-bar" aria-hidden="true"><i></i><i></i><i></i><span>virus.exe — star_fox_unreal</span></div>');
+    s.querySelector(".feat-text").insertAdjacentHTML("afterbegin",'<p class="eyebrow">Virus · Shooter</p>');
+    s.insertAdjacentHTML("beforeend",FOXSTRIP);
   }
   if(k==="key"){
     s.querySelector(".feat-text").insertAdjacentHTML("afterbegin",'<p class="eyebrow">Arcade · Móvil</p>');
