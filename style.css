@@ -339,14 +339,12 @@ dialog.big.pixel{background:var(--g1);border:4px solid var(--g6);border-radius:0
 .feat.key .d-more{border-radius:0;border:2px solid var(--yel);color:var(--yel)}
 .feat.key .d-more:hover{background:var(--yel);color:#0b0b2a}
 
-/* el monito camina hacia la llave */
+/* la llave flota */
 .key-strip{grid-column:1/-1;position:relative;height:84px;border-bottom:4px solid var(--ind);overflow:hidden}
-.kk-man{position:absolute;bottom:0;left:0;height:64px;width:auto;image-rendering:pixelated;animation:kk-walk 10s steps(30,end) infinite}
-.kk-key{position:absolute;bottom:6px;right:12px;width:84px;height:auto;animation:kk-bob 1.2s steps(2) infinite}
-@keyframes kk-walk{0%{left:0}90%,100%{left:calc(100% - 170px)}}
+.kk-key{position:absolute;bottom:6px;left:50%;margin-left:-42px;width:84px;height:auto;animation:kk-bob 1.2s steps(2) infinite}
 @keyframes kk-bob{50%{transform:translateY(-6px)}}
-@media (max-width:760px){.kk-man{height:52px}.kk-key{width:64px}@keyframes kk-walk{0%{left:0}90%,100%{left:calc(100% - 130px)}}}
-@media (prefers-reduced-motion:reduce){.kk-man,.kk-key{animation:none!important}.kk-man{left:20%}}
+@media (max-width:760px){.kk-key{width:64px;margin-left:-32px}}
+@media (prefers-reduced-motion:reduce){.kk-key{animation:none!important}}
 
 /* ventana grande del proyecto */
 dialog.big.key{--navy:#272744;--navy2:#1d1d36;--pur:#8b6d9c;--ind:#494d7e;--yel:#fbf236;--tx:#e6e3f5;--tx2:#a49cc0;
@@ -370,3 +368,61 @@ dialog.big.key{--navy:#272744;--navy2:#1d1d36;--pur:#8b6d9c;--ind:#494d7e;--yel:
 @media (max-width:760px){dialog.big.key{box-shadow:0 0 0 3px #000,6px 6px 0 3px rgba(0,0,0,.6)}}
 /* la llave es un PNG suave: no usar renderizado "pixelado" en ella */
 .kk-key,.feat.key .d-did li::before,.big.key .d-did li::before{image-rendering:auto}
+
+/* ---------- Excriblecism: fondo de pergamino (SpriteTextBox3), en lugar del negro ---------- */
+.feat.pixel{--ink:#292418;--ink2:#4a3f2c;--ink3:#6b5a40;--paper:#e8dcc3;
+  background:#bda583;background-clip:padding-box;   /* el centro es papel liso (si no, la imagen se repite en mosaico) */
+  box-shadow:none;color:var(--ink);padding:12px 16px;
+  border:solid transparent;border-width:30px 34px 36px 30px;
+  border-image:url(media/text-box.png) 15 17 18 15/30px 34px 36px 30px round;   /* solo los bordes salen de la imagen */
+  filter:drop-shadow(8px 8px 0 rgba(0,0,0,.55))}
+.feat.pixel .eyebrow{color:var(--ink3)}
+.feat.pixel h3{color:#1b1710}
+.feat.pixel .d-long{color:#3a3223}
+.feat.pixel h4{color:var(--ink3)}
+.feat.pixel .d-did{color:var(--ink)}
+.feat.pixel .d-did li::before{color:var(--ink3)}
+.feat.pixel .feat-media{background:var(--ink);border-color:var(--ink)}
+.feat.pixel .tags span{border-color:var(--ink);color:var(--ink)}
+.feat.pixel .d-btn{background:var(--ink);color:var(--paper);box-shadow:5px 5px 0 rgba(41,36,24,.4)}
+.feat.pixel .d-btn:hover{background:var(--ink2);box-shadow:2px 2px 0 rgba(41,36,24,.4)}
+.feat.pixel .d-more{border-color:var(--ink);color:var(--ink)}
+.feat.pixel .d-more:hover{background:var(--ink);color:var(--paper)}
+.feat.pixel .stage{background:linear-gradient(transparent 80%,var(--ink2) 80%),var(--ink);border-color:var(--ink)}
+.feat.pixel .plaque{background:var(--ink);border-color:var(--ink)}
+.feat.pixel .plaque b{color:#9a8a6c}
+.feat.pixel .typer .ok{color:var(--paper)}
+.feat.pixel .typer .cur{background:var(--paper);color:var(--ink)}
+.feat.pixel .typer .rest{color:#7b6a4e}
+@media (max-width:760px){
+  .feat.pixel{padding:8px 10px;border-width:21px 24px 26px 21px;
+    border-image:url(media/text-box.png) 15 17 18 15/21px 24px 26px 21px round;
+    filter:drop-shadow(5px 5px 0 rgba(0,0,0,.55))}
+}
+
+/* ---------- Excriblecism: la ventana de detalle mantiene el pergamino ---------- */
+dialog.big.pixel{--ink:#292418;--ink2:#4a3f2c;--ink3:#6b5a40;--paper:#e8dcc3;
+  background:#bda583;background-clip:padding-box;color:var(--ink);box-shadow:none;border-radius:0;
+  border:solid transparent;border-width:30px 34px 36px 30px;
+  border-image:url(media/text-box.png) 15 17 18 15/30px 34px 36px 30px round;
+  filter:drop-shadow(8px 8px 0 rgba(0,0,0,.55))}
+.big.pixel .eyebrow{color:var(--ink3)}
+.big.pixel .big-title{color:#1b1710}
+.big.pixel .tags span{border-color:var(--ink);color:var(--ink)}
+.big.pixel .big-hero{background:var(--ink);border-color:var(--ink)}
+.big.pixel .big-long,.big.pixel .big-sec p{color:#3a3223}
+.big.pixel h4{color:var(--ink3)}
+.big.pixel .big-sec{border-color:var(--ink);background:rgba(41,36,24,.08)}
+.big.pixel .d-did{color:var(--ink)}
+.big.pixel .d-did li::before{color:var(--ink3)}
+.big.pixel .big-gallery figure{background:var(--ink);border-color:var(--ink)}
+.big.pixel .big-gallery figcaption{color:var(--paper)}
+.big.pixel .d-btn{background:var(--ink);color:var(--paper);box-shadow:5px 5px 0 rgba(41,36,24,.4)}
+.big.pixel .d-btn:hover{background:var(--ink2);box-shadow:2px 2px 0 rgba(41,36,24,.4)}
+.big.pixel .close{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.big.pixel .close:hover{background:var(--paper);color:var(--ink)}
+@media (max-width:760px){
+  dialog.big.pixel{border-width:21px 24px 26px 21px;
+    border-image:url(media/text-box.png) 15 17 18 15/21px 24px 26px 21px round;
+    box-shadow:none;filter:drop-shadow(5px 5px 0 rgba(0,0,0,.55))}
+}
