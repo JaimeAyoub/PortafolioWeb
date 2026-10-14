@@ -67,6 +67,7 @@
     <ul class="d-did" id="bDid"></ul>
     <h4 id="bGalH">Galería</h4>
     <div class="big-gallery" id="bGal"></div>
+    <a class="d-btn" id="bItch" target="_blank" rel="noopener">Ver en itch.io ↗</a>
     <a class="d-btn" id="bRepo" target="_blank" rel="noopener">Ver código en GitHub ↗</a>
   </div>
 </dialog>
@@ -83,12 +84,14 @@ const projects = [
    did:["Director del juego.","VFX y shaders para el combate.","Sistemas de interacción de objetos.","Lógica de combate.","SFX."],
    //sections:[{h:"La idea",t:"Escribe aquí de qué trata y qué querías lograr."},{h:"El reto técnico",t:"Escribe aquí qué fue lo más difícil y cómo lo resolviste."},{h:"Resultado",t:"Escribe aquí cómo terminó y qué aprendiste."}],
    gallery:[{src:"media/excriblecism/01.gif",cap:"Shader para muerte del enemigo."},{src:"media/excriblecism/02.gif",cap:"Transición a combate."},{src:"media/excriblecism/03.gif",cap:"Mecánica especial de boss."}],
+   itch:"https://israpoke.itch.io/excriblecism",
    repo:"https://github.com/JaimeAyoub/Exorcist"},
   {name:"I Lost My Keys", feat:"key", tags:["C#","Unity","Móvil"], media:"media/keys/Principal.gif",
    desc:"Minijuego para celular en el que \"moldeas\" llaves para abrir tantas puertas como puedas.",
    long:"Minijuego para celular en el que \"moldeas\" llaves para abrir tantas puertas como puedas.",
    did:["Desarrollo de sistema de chequeo de grid","Game Loop.","Básicamente todo el juego."],
    gallery:[{src:"media/keys/01.png",cap:"Menú de inicio."},{src:"media/keys/01.gif",cap:"Loop del juego."},{src:"media/keys/02.png",cap:"Game Over."}],
+   itch:"https://pickleman325.itch.io/i-lost-my-keys",
    repo:"https://github.com/JaimeAyoub/I-lost-my-keys"},
   {name:"Tesis en Unreal 5", feat:"ink", tags:["C++","Unreal 5","Shaders","VFX"], media:"media/tesis/tesis-unreal.gif",
    desc:"Mi tesis: Shaders y VFX que imitan el estilo Sumi-e, con combate Hack 'n' Slash.",
@@ -98,22 +101,25 @@ const projects = [
    gallery:[{src:"media/tesis/01.gif",cap:"Efecto para ataque cargado."},{src:"media/tesis/02.gif",cap:"Impact frame para ciertos ataques."},
    {src:"media/tesis/03.gif",cap:"Hit VFX."},{src:"media/tesis/04.gif",cap:"Muerte del enemigo."},{src:"media/tesis/05.gif",cap:"Slam al suelo VFX."},
    {src:"media/tesis/06.gif",cap:"Shader para meshes."}],
+   itch:"https://pickleman325.itch.io/tesis-que-todavia-no-tiene-nombre",
    repo:"https://github.com/JaimeAyoub/TesisPeroAhoraEnUnreal"},
   {name:"Moory Up Cowboy", tags:["C#","Unity","Equipo","VR"], media:"media/moory-up-cowboy.gif",
    desc:"Proyecto en equipo desarrollado en C#.",
    long:"Proyecto en equipo desarrollado en C#. Escribe aquí más contexto: de qué trata, el tamaño del equipo, tu rol.",
    did:["Describe aquí tu rol en el equipo.","Describe aquí una cosa que programaste.","Y una más."],
+   itch:"https://pickleman325.itch.io/mooryupcowboy",
    repo:"https://github.com/AlexGuzmanSAE/MooryUpCowboy"},
   {name:"Cómputo Gráfico Final", tags:["C++","OpenGL"], media:"media/computo-grafico.gif",
    desc:"Proyecto final de cómputo gráfico hecho con OpenGL.",
    long:"Proyecto final de cómputo gráfico hecho con OpenGL. Escribe aquí más contexto: qué renderiza, qué técnicas usaste.",
    did:["Describe aquí una técnica que implementaste.","Describe aquí otra.","Y una más."],
    repo:"https://github.com/JaimeAyoub/ComputoGraficoFinal2025"},
-  {name:"Don't download RAM from the internet", feat:"fox", tags:["Unreal 5","VFX"], media:"media/starfox-unreal.gif",
+  {name:"Don't download RAM from the internet", feat:"fox", tags:["Unreal 5","VFX"], media:"media/starfox/starfox-unreal.gif",
    desc:"Eres un virus dentro de una PC y derrotas a las naves que protegen la computadora. Hecho en Unreal 5 al estilo Star Fox.",
    long:"Juego de naves al estilo Star Fox hecho en Unreal 5. Eres un virus dentro de una PC y tu misión es derrotar a las naves que actúan como protectores de la computadora.",
-   did:["VFX con flipbooks: explosiones, destellos y efectos de energía.","Describe aquí otra cosa que programaste.","Y una más."],
-   gallery:[{src:"media/starfox/01.gif",cap:"Describe esta imagen o GIF."},{src:"media/starfox/02.gif",cap:"Describe esta imagen o GIF."}],
+   did:["VFX con flipbooks: explosiones, destellos y efectos de energía. (NO hice los sprites)","Lógica de spawn de enemigos.","Efectos de post processing."],
+   gallery:[{src:"media/starfox/01.gif",cap:"Recorrido."},{src:"media/starfox/02.gif",cap:"Combate contra jefe."},{src:"media/starfox/03.gif",cap:"Muerte de jefe."}],
+   itch:"https://pickleman325.itch.io/dontdownloadramfromtheinternet",
    repo:"https://github.com/JaimeAyoub/StarFoxUnreal"}
 ];
 
@@ -168,8 +174,8 @@ const INK_DECO=`<svg class="ink-deco ink-mount" viewBox="0 0 800 200" preserveAs
 </g></g></svg>
 <span class="ink-cap" aria-hidden="true">水墨画</span>`;
 
-const fxTile=(f,n,fw,fh,t)=>`<div class="fx" style="--n:${n};--s:${n-1};--ar:${fw}/${fh};--t:${t}s;background-image:url(media/starfox/${f})"></div>`;
-const FXROW=`<div class="fx-row">${fxTile("fx-sun.png",4,32,32,1)}${fxTile("fx-boom.png",6,56,48,.9)}${fxTile("fx-spark.png",4,64,63,1.1)}</div>`;
+const fxTile=(f,n,fw,fh,t)=>`<div class="fx" style="--n:${n};--ar:${fw}/${fh};--t:${t}s;background-image:url(media/starfox/${f})"></div>`;
+const FXROW=`<div class="fx-row">${fxTile("fx-sun.png",4,59.25,30,1)}${fxTile("fx-boom.png",6,56,48,.9)}${fxTile("fx-spark.png",4,64,63,1.1)}</div>`;
 const FOXSTRIP=`<div class="fox-strip" aria-hidden="true">${FXROW}</div>`;
 const FOXFX=`<h4>VFX · flipbooks</h4>${FXROW.replace('class="fx-row"','class="fx-row big-fx"')}`;
 const KEYSTRIP=`<div class="key-strip" aria-hidden="true"><img class="kk-key" src="media/key.png" alt=""></div>`;
@@ -235,6 +241,7 @@ function openBig(p){
     gal.appendChild(f);
   });
   $("bGalH").hidden=gal.hidden=!(p.gallery&&p.gallery.length);
+  $("bItch").hidden=!p.itch;if(p.itch)$("bItch").href=p.itch;
   $("bRepo").href=p.repo;
   big.showModal();
   document.body.classList.add("lock");
@@ -255,8 +262,9 @@ const featured=document.getElementById("featured");
   s.querySelector(".d-long").textContent=p.long||p.desc;
   const ul=s.querySelector(".d-did");
   (p.did||[]).forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.appendChild(li)});
-  s.querySelector(".d-btn").href=p.repo;
-  s.querySelector(".d-btn").insertAdjacentHTML("afterend",' <button class="d-more" type="button">Ver detalle +</button>');
+  const main=s.querySelector(".d-btn");
+  if(p.itch){main.href=p.itch;main.textContent="Ver en itch.io ↗"}else{main.href=p.repo}
+  main.insertAdjacentHTML("afterend",' <button class="d-more" type="button">Ver detalle +</button>');
   s.setAttribute("role","button");s.tabIndex=0;s.setAttribute("aria-label","Ver detalle de "+p.name);
   s.addEventListener("click",e=>{if(e.target.closest(".d-btn"))return;openBig(p)});
   s.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target===s){e.preventDefault();openBig(p)}});

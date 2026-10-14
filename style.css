@@ -459,7 +459,7 @@ dialog.big.pixel{--ink:#292418;--ink2:#4a3f2c;--ink3:#6b5a40;--paper:#e8dcc3;
 .fox-strip .fx{height:96px}
 .fx-row{display:flex;align-items:center;justify-content:center;gap:14px;padding:12px;border:1px solid var(--line);background:#070b10}
 .fx{height:72px;aspect-ratio:var(--ar);background-repeat:no-repeat;background-size:calc(var(--n)*100%) 100%;image-rendering:pixelated;
-  animation:fx-flip var(--t) steps(var(--s),jump-none) infinite}
+  animation:fx-flip var(--t) steps(var(--n),end) infinite}
 @keyframes fx-flip{from{background-position:0 0}to{background-position:100% 0}}
 @media (max-width:760px){
   .feat.fox{padding:0 16px 16px}
@@ -492,20 +492,3 @@ dialog.big.fox{--bg:#0b1016;--bg2:#101923;--line:#25384a;--cy:#38e8ff;--or:#ff9a
 .fx-row.big-fx{justify-content:flex-start;flex-wrap:wrap}
 .fx-row.big-fx .fx{height:110px}
 @media (max-width:760px){dialog.big.fox{box-shadow:0 0 0 1px #000,6px 6px 0 rgba(0,0,0,.55)}}
-
-/* ---------- PRUEBA: destacados de 2 en 2 (borra este bloque para volver a uno por fila) ---------- */
-
-/* @media (min-width:1000px){
-  .wrap{max-width:1160px}
-  #featured{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 40px;align-items:stretch}
-  #featured .feat{margin:0;grid-template-columns:minmax(0,1fr);gap:22px;align-content:start}
-  #featured .feat.pixel .feat-text{order:0}
-  /* tesis (tinta): mismas medidas compactas que en celular */
-/*   #featured .feat.ink{padding:32px 28px}
-  #featured .feat.ink .ink-bamboo{height:30%;opacity:.45}
-  #featured .feat.ink .ink-cap{display:none}
-  #featured .feat.ink::after{width:100px;height:100px;right:-10px;top:-20px;border-width:10px}
-  /* la franja de VFX de Star Fox cabe mejor más pequeña */
- /*  #featured .fox-strip .fx{height:72px}  */
-  
-/* }  */
