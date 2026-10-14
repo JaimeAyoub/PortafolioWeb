@@ -109,7 +109,7 @@ const projects = [
    long:"Proyecto final de cómputo gráfico hecho con OpenGL. Escribe aquí más contexto: qué renderiza, qué técnicas usaste.",
    did:["Describe aquí una técnica que implementaste.","Describe aquí otra.","Y una más."],
    repo:"https://github.com/JaimeAyoub/ComputoGraficoFinal2025"},
-  {name:"Star Fox en Unreal", feat:"fox", tags:["Unreal 5","VFX"], media:"media/starfox-unreal.gif",
+  {name:"Don't download RAM from the internet", feat:"fox", tags:["Unreal 5","VFX"], media:"media/starfox-unreal.gif",
    desc:"Eres un virus dentro de una PC y derrotas a las naves que protegen la computadora. Hecho en Unreal 5 al estilo Star Fox.",
    long:"Juego de naves al estilo Star Fox hecho en Unreal 5. Eres un virus dentro de una PC y tu misión es derrotar a las naves que actúan como protectores de la computadora.",
    did:["VFX con flipbooks: explosiones, destellos y efectos de energía.","Describe aquí otra cosa que programaste.","Y una más."],
@@ -274,7 +274,7 @@ const featured=document.getElementById("featured");
     setupScene(s,p);
   }
   if(k==="fox"){
-    s.insertAdjacentHTML("afterbegin",'<div class="win-bar" aria-hidden="true"><i></i><i></i><i></i><span>virus.exe — star_fox_unreal</span></div>');
+    s.insertAdjacentHTML("afterbegin",'<div class="win-bar" aria-hidden="true"><i></i><i></i><i></i><span>Don\'t download RAM from the internet</span></div>');
     s.querySelector(".feat-text").insertAdjacentHTML("afterbegin",'<p class="eyebrow">Virus · Shooter</p>');
     s.insertAdjacentHTML("beforeend",FOXSTRIP);
   }
