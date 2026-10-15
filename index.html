@@ -22,7 +22,7 @@
   <header>
     <p class="role">Game Developer</p>
     <h1>Jaime Ayoub</h1>
-    <p class="lead">Programador de videojuegos con experiencia en Unity (C#) y Unreal Engine (C++). Amante de los shaders y VFX</p>
+    <p class="lead">Hola!, soy Jaime Ayoub, Programador de videojuegos con experiencia en Unity (C#) y Unreal Engine (C++). También estoy aprendiendo sobre shaders y VFX.</p>
     <div class="links">
       <a href="https://github.com/JaimeAyoub" target="_blank" rel="noopener">GitHub</a>
       <a href="https://pickleman325.itch.io/" target="_blank" rel="noopener">Itch.io</a>
@@ -62,7 +62,6 @@
     <div class="big-hero" id="bHero"></div>
     <p class="big-long" id="bLong"></p>
     <div class="big-sections" id="bSecs"></div>
-    <div class="big-extra" id="bExtra"></div>
     <h4>Lo que hice</h4>
     <ul class="d-did" id="bDid"></ul>
     <h4 id="bGalH">Galería</h4>
@@ -174,10 +173,6 @@ const INK_DECO=`<svg class="ink-deco ink-mount" viewBox="0 0 800 200" preserveAs
 </g></g></svg>
 <span class="ink-cap" aria-hidden="true">水墨画</span>`;
 
-const fxTile=(f,n,fw,fh,t)=>`<div class="fx" style="--n:${n};--ar:${fw}/${fh};--t:${t}s;background-image:url(media/starfox/${f})"></div>`;
-const FXROW=`<div class="fx-row">${fxTile("fx-sun.png",4,59.25,30,1)}${fxTile("fx-boom.png",6,56,48,.9)}${fxTile("fx-spark.png",4,64,63,1.1)}</div>`;
-const FOXSTRIP=`<div class="fox-strip" aria-hidden="true">${FXROW}</div>`;
-const FOXFX=`<h4>VFX · flipbooks</h4>${FXROW.replace('class="fx-row"','class="fx-row big-fx"')}`;
 const KEYSTRIP=`<div class="key-strip" aria-hidden="true"><img class="kk-key" src="media/key.png" alt=""></div>`;
 const STAGE=`<div class="stage" hidden aria-hidden="true"><div class="stage-sprites"></div></div>`;
 const PLAQUE=`<div class="plaque" aria-hidden="true"><b>Oración</b><div class="typer"><span class="ok"></span><span class="cur"></span><span class="rest"></span></div></div>`;
@@ -223,7 +218,6 @@ function openBig(p){
   fillTags($("bTags"),p.tags);
   $("bHero").replaceChildren(mediaEl(p));
   $("bLong").textContent=p.long||p.desc;
-  $("bExtra").innerHTML=p.feat==="fox"?FOXFX:"";
   const secs=$("bSecs");secs.textContent="";
   (p.sections||[]).forEach(s=>{
     const d=document.createElement("div");d.className="big-sec";
@@ -284,7 +278,6 @@ const featured=document.getElementById("featured");
   if(k==="fox"){
     s.insertAdjacentHTML("afterbegin",'<div class="win-bar" aria-hidden="true"><i></i><i></i><i></i><span>Don\'t download RAM from the internet</span></div>');
     s.querySelector(".feat-text").insertAdjacentHTML("afterbegin",'<p class="eyebrow">Virus · Shooter</p>');
-    s.insertAdjacentHTML("beforeend",FOXSTRIP);
   }
   if(k==="key"){
     s.querySelector(".feat-text").insertAdjacentHTML("afterbegin",'<p class="eyebrow">Arcade · Móvil</p>');

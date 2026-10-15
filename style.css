@@ -453,20 +453,11 @@ dialog.big.pixel{--ink:#292418;--ink2:#4a3f2c;--ink3:#6b5a40;--paper:#e8dcc3;
 .feat.fox .d-more{border-radius:0;border:2px solid var(--cy);color:var(--cy)}
 .feat.fox .d-more:hover{background:var(--cy);color:#04141a}
 
-/* protectores del sistema + flipbooks de VFX animados */
-.fox-strip{grid-column:1/-1;padding-top:20px;border-top:1px dashed var(--line)}
-.fox-strip .fx-row{justify-content:space-evenly}
-.fox-strip .fx{height:96px}
-.fx-row{display:flex;align-items:center;justify-content:center;gap:14px;padding:12px;border:1px solid var(--line);background:#070b10}
-.fx{height:72px;aspect-ratio:var(--ar);background-repeat:no-repeat;background-size:calc(var(--n)*100%) 100%;image-rendering:pixelated;
-  animation:fx-flip var(--t) steps(var(--n),end) infinite}
-@keyframes fx-flip{from{background-position:0 0}to{background-position:100% 0}}
+
 @media (max-width:760px){
   .feat.fox{padding:0 16px 16px}
   .win-bar{margin:0 -16px 4px}
-  .fox-strip .fx{height:72px}
 }
-@media (prefers-reduced-motion:reduce){.fx{animation:none!important;background-position:0 0}}
 
 /* ventana grande */
 dialog.big.fox{--bg:#0b1016;--bg2:#101923;--line:#25384a;--cy:#38e8ff;--or:#ff9a3c;--tx:#d3e6ee;--tx2:#8aa5b4;
@@ -488,7 +479,10 @@ dialog.big.fox{--bg:#0b1016;--bg2:#101923;--line:#25384a;--cy:#38e8ff;--or:#ff9a
 .big.fox .d-btn:hover{background:#8ff3ff}
 .big.fox .close{border-radius:0;background:var(--bg2);border:2px solid var(--cy);color:var(--cy)}
 .big.fox .close:hover{background:var(--cy);color:#04141a}
-.big-extra:empty{display:none}
-.fx-row.big-fx{justify-content:flex-start;flex-wrap:wrap}
-.fx-row.big-fx .fx{height:110px}
 @media (max-width:760px){dialog.big.fox{box-shadow:0 0 0 1px #000,6px 6px 0 rgba(0,0,0,.55)}}
+
+
+
+/* botones de la ventana de detalle: itch.io + GitHub */
+.d-btn[hidden]{display:none}
+.big .d-btn{margin:0 12px 10px 0}
