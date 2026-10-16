@@ -482,7 +482,7 @@ dialog.big.fox{--bg:#0b1016;--bg2:#101923;--line:#25384a;--cy:#38e8ff;--or:#ff9a
 @media (max-width:760px){dialog.big.fox{box-shadow:0 0 0 1px #000,6px 6px 0 rgba(0,0,0,.55)}}
 
 
-
 /* botones de la ventana de detalle: itch.io + GitHub */
 .d-btn[hidden]{display:none}
 .big .d-btn{margin:0 12px 10px 0}
+#dlg .d-btn{margin:0 12px 10px 0}

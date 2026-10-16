@@ -48,6 +48,7 @@
     <p class="d-long" id="dLong"></p>
     <h4>Lo que hice</h4>
     <ul class="d-did" id="dDid"></ul>
+    <a class="d-btn" id="dItch" target="_blank" rel="noopener">Ver en itch.io ↗</a>
     <a class="d-btn" id="dRepo" target="_blank" rel="noopener">Ver código en GitHub ↗</a>
   </div>
 </dialog>
@@ -148,6 +149,7 @@ function openProject(p){
   document.getElementById("dLong").textContent=p.long||p.desc;
   const ul=document.getElementById("dDid");ul.textContent="";
   (p.did||[]).forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.appendChild(li)});
+  const it=document.getElementById("dItch");it.hidden=!p.itch;if(p.itch)it.href=p.itch;
   document.getElementById("dRepo").href=p.repo;
   dlg.showModal();
   document.body.classList.add("lock");
