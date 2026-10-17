@@ -486,3 +486,19 @@ dialog.big.fox{--bg:#0b1016;--bg2:#101923;--line:#25384a;--cy:#38e8ff;--or:#ff9a
 .d-btn[hidden]{display:none}
 .big .d-btn{margin:0 12px 10px 0}
 #dlg .d-btn{margin:0 12px 10px 0}
+
+/* ---------- Iconos de redes en la cabecera ---------- */
+.links{gap:14px}
+.links a.ico{display:grid;place-items:center;width:54px;height:54px;padding:0;border:1px solid var(--g3);border-radius:14px;
+  background:var(--g1);color:var(--g6);transition:transform .2s,background .2s,color .2s,border-color .2s}
+.links a.ico svg{width:26px;height:26px;fill:currentColor}
+.links a.ico:hover{transform:translateY(-4px);border-color:var(--g6)}
+.links a.ico.gh:hover{background:#fff;color:#0d1117;border-color:#fff}
+.links a.ico.it:hover{background:#fa5c5c;color:#fff;border-color:#fa5c5c}
+.links a.ico.li:hover{background:#0a66c2;color:#fff;border-color:#0a66c2}
+.links a.ico:focus-visible{outline:2px solid var(--g6);outline-offset:3px}
+
+/* ---------- Videos (.mp4 / .webm) en lugar de GIF: mismos estilos que las imágenes ---------- */
+.media video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;background:var(--g1)}
+.d-media video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;background:var(--g1)}
+.feat.ink .feat-media video{filter:grayscale(1) contrast(1.05)}
