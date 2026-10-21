@@ -492,6 +492,7 @@ dialog.big.fox{--bg:#0b1016;--bg2:#101923;--line:#25384a;--cy:#38e8ff;--or:#ff9a
 .links a.ico{display:grid;place-items:center;width:54px;height:54px;padding:0;border:1px solid var(--g3);border-radius:14px;
   background:var(--g1);color:var(--g6);transition:transform .2s,background .2s,color .2s,border-color .2s}
 .links a.ico svg{width:26px;height:26px;fill:currentColor}
+.links a.ico::after{display:none}
 .links a.ico:hover{transform:translateY(-4px);border-color:var(--g6)}
 .links a.ico.gh:hover{background:#fff;color:#0d1117;border-color:#fff}
 .links a.ico.it:hover{background:#fa5c5c;color:#fff;border-color:#fa5c5c}
@@ -522,6 +523,16 @@ header::after{content:"";position:absolute;left:0;bottom:-1px;width:56px;height:
 .hd-intro{position:relative;margin-top:40px;border-top:1px solid var(--g3);padding-top:28px}
 .hd-intro::before{content:"";position:absolute;top:-1px;left:0;width:56px;height:1px;background:var(--g6)}
 .hd-intro .links{margin-top:28px}
+@media (min-width:900px){
+  .hd-intro{display:flex;align-items:center;justify-content:space-between;gap:40px}
+  .hd-intro .links{margin:0;flex-shrink:0}
+  .links a.ico{display:flex;width:auto;min-height:64px;height:auto;gap:12px;padding:0 20px}
+  .links a.ico svg{width:30px;height:30px;flex:none}
+  .links a.ico::after{display:block;font-size:.9rem;font-weight:600;white-space:nowrap}
+  .links a.ico.gh::after{content:"GitHub"}
+  .links a.ico.it::after{content:"Itch.io"}
+  .links a.ico.li::after{content:"LinkedIn"}
+}
 @media (max-width:560px){
   header{padding-bottom:44px;margin-bottom:40px}
   .hd-intro{margin-top:28px;padding-top:22px}
