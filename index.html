@@ -292,23 +292,39 @@ const projectStyles={
   fox:"Virus · Shooter"
 };
 let activeCard;
-projects.forEach((p,i)=>{
+const engineGroups=new Map();
+function getEngineGroup(engine){
+  const key=engine||"other";
+  if(!engineGroups.has(key)){
+    const group=document.createElement("div");
+    group.className="project-engine";
+    const heading=document.createElement("h3");
+    heading.className="project-engine-heading";
+    heading.textContent=ENGINES[key]?ENGINES[key].name:"Otros motores";
+    const cards=document.createElement("div");
+    cards.className="project-engine-cards";
+    group.append(heading,cards);
+    engineGroups.set(key,cards);
+    list.appendChild(group);
+  }
+  return engineGroups.get(key);
+}
+projects.forEach(p=>{
   const card=document.createElement("button");
   card.type="button";card.className="project-card "+(p.feat||"");
   card.setAttribute("aria-label","Destacar "+p.name);
   card.setAttribute("aria-pressed","false");
-  card.innerHTML='<span class="project-card-media"></span><span class="project-card-copy"><span class="project-card-kind"></span><span class="project-card-title"></span></span><span class="project-card-number"></span>';
+  card.innerHTML='<span class="project-card-media"></span><span class="project-card-copy"><span class="project-card-kind"></span><span class="project-card-title"></span></span>';
   card.querySelector(".project-card-media").appendChild(mediaEl(p));
   card.querySelector(".project-card-kind").textContent=projectStyles[p.feat]||"Proyecto";
   card.querySelector(".project-card-title").textContent=p.name;
-  card.querySelector(".project-card-number").textContent=String(i+1).padStart(2,"0");
   card.addEventListener("click",()=>{
     if(activeCard)activeCard.setAttribute("aria-pressed","false");
     card.setAttribute("aria-pressed","true");
     activeCard=card;
     renderFeatured(p,true);
   });
-  list.appendChild(card);
+  getEngineGroup(engineOf(p.tags)).appendChild(card);
 });
 const initialProject=projects.find(p=>p.feat==="ink")||projects[0];
 activeCard=list.querySelector(".project-card."+initialProject.feat);
