@@ -237,10 +237,11 @@ $("bClose").addEventListener("click",()=>big.close());
 big.addEventListener("click",e=>{if(e.target===big)big.close()});
 big.addEventListener("close",()=>document.body.classList.remove("lock"));
 const featured=document.getElementById("featured");
-function renderFeatured(p){
+function renderFeatured(p,animate=false){
   const k=p.feat||"";
   const s=document.createElement("section");
   s.className="feat "+k;
+  if(animate&&!matchMedia("(prefers-reduced-motion: reduce)").matches)s.classList.add("switch-in");
   s.innerHTML='<div class="feat-media"></div><div class="feat-text"><h3></h3><div class="tags"></div><p class="d-long"></p><h4>Lo que hice</h4><ul class="d-did"></ul><div class="feature-actions"></div></div>';
   s.querySelector(".feat-media").appendChild(mediaEl(p));
   s.querySelector("h3").textContent=p.name;
@@ -305,7 +306,7 @@ projects.forEach((p,i)=>{
     if(activeCard)activeCard.setAttribute("aria-pressed","false");
     card.setAttribute("aria-pressed","true");
     activeCard=card;
-    renderFeatured(p);
+    renderFeatured(p,true);
   });
   list.appendChild(card);
 });
