@@ -37,29 +37,18 @@
     </div>
   </header>
 
-  <h2>Destacados</h2>
-  <div id="featured"></div>
+  <section aria-labelledby="featuredHeading">
+    <h2 id="featuredHeading">Proyecto destacado</h2>
+    <div id="featured" aria-live="polite"></div>
+  </section>
 
-<!-- 
-  <h2>Más proyectos</h2> -->
-  <div class="list" id="list"></div>
+  <section aria-labelledby="projectsHeading">
+    <h2 id="projectsHeading">Proyectos</h2>
+    <div class="list" id="list"></div>
+  </section>
 
   <footer>© <span id="y"></span> Jaime Ayoub Ramos</footer>
 </div>
-
-<dialog id="dlg" aria-labelledby="dTitle">
-  <button class="close" id="dClose" aria-label="Cerrar">×</button>
-  <div class="d-body">
-    <div class="d-media" id="dMedia"></div>
-    <h3 class="d-title" id="dTitle"></h3>
-    <div class="tags" id="dTags"></div>
-    <p class="d-long" id="dLong"></p>
-    <h4>Lo que hice</h4>
-    <ul class="d-did" id="dDid"></ul>
-    <a class="d-btn" id="dItch" target="_blank" rel="noopener">Ver en itch.io ↗</a>
-    <a class="d-btn" id="dRepo" target="_blank" rel="noopener">Ver código en GitHub ↗</a>
-  </div>
-</dialog>
 
 <dialog id="big" class="big" aria-labelledby="bTitle">
   <div class="big-inner">
@@ -121,7 +110,6 @@ const projects = [
 ];
 
 const list=document.getElementById("list");
-const dlg=document.getElementById("dlg");
 
 function placeholder(){const d=document.createElement("div");d.className="ph";d.textContent="Video / imagen";return d}
 const vidObs="IntersectionObserver" in window?new IntersectionObserver(es=>es.forEach(e=>{
@@ -158,21 +146,6 @@ function fillTags(el,tags){
   }
   tags.forEach(t=>{const s=document.createElement("span");s.textContent=t;el.appendChild(s)});
 }
-
-function openProject(p){
-  document.getElementById("dMedia").replaceChildren(mediaEl(p));
-  document.getElementById("dTitle").textContent=p.name;
-  fillTags(document.getElementById("dTags"),p.tags);
-  document.getElementById("dLong").textContent=p.long||p.desc;
-  const ul=document.getElementById("dDid");ul.textContent="";
-  (p.did||[]).forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.appendChild(li)});
-  const it=document.getElementById("dItch");it.hidden=!p.itch;if(p.itch)it.href=p.itch;
-  document.getElementById("dRepo").href=p.repo;
-  dlg.showModal();
-  document.body.classList.add("lock");
-  dlg.scrollTop=0;
-}
-
 
 const L="M0,0 Q24,-9 56,-1 Q26,7 0,0Z";
 const INK_DECO=`<svg class="ink-deco ink-mount" viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
@@ -264,23 +237,29 @@ $("bClose").addEventListener("click",()=>big.close());
 big.addEventListener("click",e=>{if(e.target===big)big.close()});
 big.addEventListener("close",()=>document.body.classList.remove("lock"));
 const featured=document.getElementById("featured");
-["ink","pixel","key","fox"].forEach(k=>{
-  const p=projects.find(x=>x.feat===k);if(!p)return;
+function renderFeatured(p){
+  const k=p.feat||"";
   const s=document.createElement("section");
   s.className="feat "+k;
-  s.innerHTML='<div class="feat-media"></div><div class="feat-text"><h3></h3><div class="tags"></div><p class="d-long"></p><h4>Lo que hice</h4><ul class="d-did"></ul><a class="d-btn" target="_blank" rel="noopener">Ver código en GitHub ↗</a></div>';
+  s.innerHTML='<div class="feat-media"></div><div class="feat-text"><h3></h3><div class="tags"></div><p class="d-long"></p><h4>Lo que hice</h4><ul class="d-did"></ul><div class="feature-actions"></div></div>';
   s.querySelector(".feat-media").appendChild(mediaEl(p));
   s.querySelector("h3").textContent=p.name;
   fillTags(s.querySelector(".tags"),p.tags);
   s.querySelector(".d-long").textContent=p.long||p.desc;
   const ul=s.querySelector(".d-did");
   (p.did||[]).forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.appendChild(li)});
-  const main=s.querySelector(".d-btn");
-  if(p.itch){main.href=p.itch;main.textContent="Ver en itch.io ↗"}else{main.href=p.repo}
-  main.insertAdjacentHTML("afterend",' <button class="d-more" type="button">Ver detalle +</button>');
-  s.setAttribute("role","button");s.tabIndex=0;s.setAttribute("aria-label","Ver detalle de "+p.name);
-  s.addEventListener("click",e=>{if(e.target.closest(".d-btn"))return;openBig(p)});
-  s.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target===s){e.preventDefault();openBig(p)}});
+  const actions=s.querySelector(".feature-actions");
+  if(p.itch){
+    const itch=document.createElement("a");itch.className="d-btn";itch.href=p.itch;itch.target="_blank";itch.rel="noopener";itch.textContent="Ver en itch.io ↗";
+    actions.appendChild(itch);
+  }
+  if(p.repo){
+    const repo=document.createElement("a");repo.className="d-btn";repo.href=p.repo;repo.target="_blank";repo.rel="noopener";repo.textContent="Ver código en GitHub ↗";
+    actions.appendChild(repo);
+  }
+  const more=document.createElement("button");more.className="d-more";more.type="button";more.textContent="Más detalles +";
+  more.addEventListener("click",()=>openBig(p));
+  actions.appendChild(more);
   if(k==="ink"){
     s.insertAdjacentHTML("afterbegin",INK_DECO);
     s.querySelector(".feat-text").insertAdjacentHTML("beforeend",'<span class="hanko" aria-hidden="true">墨</span>');
@@ -302,26 +281,40 @@ const featured=document.getElementById("featured");
     s.querySelector(".feat-text").insertAdjacentHTML("afterbegin",'<p class="eyebrow">Arcade · Móvil</p>');
     s.insertAdjacentHTML("beforeend",KEYSTRIP);
   }
-  featured.appendChild(s);
-});
+  featured.replaceChildren(s);
+}
 
-projects.filter(p=>!p.feat).forEach((p,i)=>{
-  const a=document.createElement("div");
-  a.className="item";a.tabIndex=0;a.setAttribute("role","button");a.setAttribute("aria-label","Ver detalles de "+p.name);
-  a.innerHTML='<span class="num"></span><span class="arrow">+</span><div class="info"><h3></h3><p></p><div class="tags"></div></div><div class="media"></div>';
-  a.querySelector(".num").textContent=String(i+1).padStart(2,"0");
-  a.querySelector("h3").textContent=p.name;
-  a.querySelector("p").textContent=p.desc;
-  fillTags(a.querySelector(".tags"),p.tags);
-  a.querySelector(".media").appendChild(mediaEl(p));
-  a.addEventListener("click",()=>openProject(p));
-  a.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openProject(p)}});
-  list.appendChild(a);
+const projectStyles={
+  pixel:"Horror · Typing",
+  key:"Arcade · Móvil",
+  ink:"Tesis · Sumi-e",
+  fox:"Virus · Shooter"
+};
+let activeCard;
+projects.forEach((p,i)=>{
+  const card=document.createElement("button");
+  card.type="button";card.className="project-card "+(p.feat||"");
+  card.setAttribute("aria-label","Destacar "+p.name);
+  card.setAttribute("aria-pressed","false");
+  card.innerHTML='<span class="project-card-media"></span><span class="project-card-copy"><span class="project-card-kind"></span><span class="project-card-title"></span></span><span class="project-card-number"></span>';
+  card.querySelector(".project-card-media").appendChild(mediaEl(p));
+  card.querySelector(".project-card-kind").textContent=projectStyles[p.feat]||"Proyecto";
+  card.querySelector(".project-card-title").textContent=p.name;
+  card.querySelector(".project-card-number").textContent=String(i+1).padStart(2,"0");
+  card.addEventListener("click",()=>{
+    if(activeCard)activeCard.setAttribute("aria-pressed","false");
+    card.setAttribute("aria-pressed","true");
+    activeCard=card;
+    renderFeatured(p);
+  });
+  list.appendChild(card);
 });
+const initialProject=projects.find(p=>p.feat==="ink")||projects[0];
+activeCard=list.querySelector(".project-card."+initialProject.feat);
+if(activeCard)activeCard.setAttribute("aria-pressed","true");
+renderFeatured(initialProject);
 
-document.getElementById("dClose").addEventListener("click",()=>dlg.close());
-dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
-dlg.addEventListener("close",()=>document.body.classList.remove("lock"));
+big.addEventListener("close",()=>document.body.classList.remove("lock"));
 document.getElementById("y").textContent=new Date().getFullYear();
 
 </script>
