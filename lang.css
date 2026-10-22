@@ -1,0 +1,12 @@
+/* ---------- Botón de idioma ES / EN (esquina superior derecha) ---------- */
+.lang-btn{position:fixed;top:calc(env(safe-area-inset-top,0px) + 14px);right:clamp(14px,2vw,28px);z-index:40;
+  display:inline-flex;align-items:center;padding:3px;border:1px solid var(--g3);border-radius:999px;
+  background:rgba(17,17,17,.82);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  color:var(--g5);font:600 .75rem/1 "Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.1em;
+  cursor:pointer;transition:border-color .2s,transform .2s}
+.lang-btn:hover{border-color:var(--g6);transform:translateY(-1px)}
+.lang-btn:focus-visible{outline:2px solid var(--g6);outline-offset:3px}
+.lang-opt{padding:7px 12px;border-radius:999px;transition:background .2s,color .2s}
+.lang-btn[data-lang="es"] .lang-opt[data-l="es"],
+.lang-btn[data-lang="en"] .lang-opt[data-l="en"]{background:var(--g6);color:var(--g0)}
+@media (max-width:560px){.lang-opt{padding:6px 10px}}
