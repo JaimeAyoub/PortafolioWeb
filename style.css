@@ -594,3 +594,23 @@ h1{font-weight:700;letter-spacing:-.035em}
   .project-engine-cards{grid-template-columns:repeat(2,220px)
   }
 }
+/* ---------- Foto junto al nombre (celular y PC) ---------- */
+.hd-name{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:clamp(20px,5vw,96px);align-items:center}
+.hd-name .role,.hd-name h1{grid-column:1}
+.hd-photo{display:block;position:relative;margin:0;grid-column:2;grid-row:1 / span 2;
+  width:clamp(76px,22vw,104px);aspect-ratio:1;border:1px solid var(--g3);border-radius:12px;
+  transition:transform .2s}
+.hd-photo img{display:block;width:100%;height:100%;object-fit:cover;border-radius:10px}
+/* segundo marco más fino, separado de la foto, como las líneas de la cabecera */
+.hd-photo::before{content:"";position:absolute;inset:-6px;border:1px solid var(--g3);border-radius:17px;pointer-events:none}
+/* tramo corto y claro en la esquina, igual que en las divisiones */
+.hd-photo::after{content:"";position:absolute;top:-7px;left:-7px;width:24px;height:1px;background:var(--g6);pointer-events:none}
+.hd-photo:hover{transform:translateY(-3px)}
+
+/* PC: foto más grande */
+@media (min-width:900px){
+  .hd-name{column-gap:clamp(32px,5vw,96px)}
+  .hd-photo{width:clamp(208px,16vw,280px);border-radius:14px}
+  .hd-photo::before{inset:-8px;border-radius:20px}
+  .hd-photo::after{top:-9px;left:-9px;width:34px}
+}
