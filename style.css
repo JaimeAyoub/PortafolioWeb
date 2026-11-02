@@ -614,3 +614,8 @@ h1{font-weight:700;letter-spacing:-.035em}
   .hd-photo::before{inset:-8px;border-radius:20px}
   .hd-photo::after{top:-9px;left:-9px;width:34px}
 }
+/* ---------- Botón de descarga del CV ---------- */
+.links a.ico.cv:hover{background:#3fb950;color:#04140a;border-color:#3fb950}
+@media (min-width:900px){
+  .links a.ico.cv::after{content:attr(data-label)}
+}
