@@ -158,6 +158,8 @@ function pt(p){
   return o;
 }
 
+const CV={es:"media/CV-Jaime-Ayoub.pdf",en:"media/CV-Jaime-Ayoub-EN.pdf"};
+
 const list=document.getElementById("list");
 
 function placeholder(){const d=document.createElement("div");d.className="ph";d.textContent=TX("ph");return d}
@@ -386,7 +388,7 @@ function applyLang(){
   document.querySelectorAll("[data-i18n]").forEach(el=>{el.textContent=TX(el.dataset.i18n)});
   document.querySelectorAll("[data-i18n-aria]").forEach(el=>el.setAttribute("aria-label",TX(el.dataset.i18nAria)));
   const btn=$("langBtn");btn.dataset.lang=lang;btn.setAttribute("aria-label",TX("langAria"));btn.title=TX("langAria");
-  const cv=$("cvBtn");cv.setAttribute("aria-label",TX("cv"));cv.title=TX("cv");
+  const cv=$("cvBtn");cv.setAttribute("aria-label",TX("cv"));cv.title=TX("cv");cv.href=CV[lang];cv.setAttribute("download",CV[lang].split("/").pop());
   buildList();
   renderFeatured(current,false);
 }
